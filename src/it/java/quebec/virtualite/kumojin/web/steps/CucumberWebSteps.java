@@ -2,19 +2,12 @@ package quebec.virtualite.kumojin.web.steps;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.test.context.SpringBootTest;
-import quebec.virtualite.kumojin.Application;
 import quebec.virtualite.kumojin.web.pageobject.SampleAppPageObject;
 
 import java.util.List;
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
-
-@CucumberContextConfiguration
 @RequiredArgsConstructor
-@SpringBootTest(webEnvironment = DEFINED_PORT, classes = Application.class)
 public class CucumberWebSteps
 {
     private final SampleAppPageObject sampleAppPageObject;

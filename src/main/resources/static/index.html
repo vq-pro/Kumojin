@@ -22,8 +22,22 @@
         document.querySelector('ul').appendChild(element);
     }
 
-    addItem('Apple');
-    addItem('Banana');
+    fetch("http://localhost:8080/items")
+        .then(response =>
+        {
+            return response.json();
+        })
+        .then(data =>
+        {
+            for (let item of data.items)
+            {
+                addItem(item);
+            }
+        })
+        .catch((error) =>
+        {
+            alert("Cannot connect to the backend - " + error)
+        });
 </script>
 
 </html>
