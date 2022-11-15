@@ -1,6 +1,8 @@
 package quebec.virtualite.kumojin.web.pageobject;
 
 import org.springframework.stereotype.Component;
+import quebec.virtualite.kumojin.web.utils.PageObject;
+import quebec.virtualite.kumojin.web.utils.WebClientService;
 
 import java.util.List;
 

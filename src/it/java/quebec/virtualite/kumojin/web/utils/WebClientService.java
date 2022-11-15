@@ -1,4 +1,4 @@
-package quebec.virtualite.kumojin.web.pageobject;
+package quebec.virtualite.kumojin.web.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import javax.annotation.PreDestroy;
 import static java.time.Duration.ofMillis;
 
 @Service
-class WebClientService
+public class WebClientService
 {
     WebDriver driver;
 

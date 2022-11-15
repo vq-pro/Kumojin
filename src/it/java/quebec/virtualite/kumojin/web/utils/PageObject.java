@@ -1,4 +1,4 @@
-package quebec.virtualite.kumojin.web.pageobject;
+package quebec.virtualite.kumojin.web.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
