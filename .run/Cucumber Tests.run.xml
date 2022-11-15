@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Cucumber Tests" type="JUnit" factoryName="JUnit">
+        <module name="Kumojin"/>
+        <option name="MAIN_CLASS_NAME" value=""/>
+        <option name="METHOD_NAME" value=""/>
+        <option name="TEST_OBJECT" value="directory"/>
+        <envs>
+            <env name="cucumber.options" value="--tags -@Ignore"/>
+        </envs>
+        <dir value="$PROJECT_DIR$/src/it/java"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+            <option name="RunConfigurationTask" enabled="true" run_configuration_name="Unit Tests"
+                    run_configuration_type="JUnit"/>
+        </method>
+    </configuration>
+</component>
