@@ -19,3 +19,6 @@ Located in .run directory.
 * I initially setup a multi-module project, to keep the frontend and backend separate. But this proved a hassle trying
   to start/stop the backend process from the frontend automatically. For simplicity's sake, I set it up as a single
   project and a single Spring Boot application. This way the embedded Tomcat instance will serve both sides.
+
+* I have also selected to not use any JS framework, due to the simplicity of the functionality definition. So straight
+  JavaScript was used.
