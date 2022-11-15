@@ -1,0 +1,21 @@
+# Spring
+spring.main.banner-mode: "off"
+
+# Log
+logging:
+  level.org:
+    hibernate:
+      SQL: WARN
+      type:
+        descriptor.sql.BasicBinder: WARN
+        value: WARN
+      value: WARN
+    springframework.web: WARN
+
+spring.jpa:
+  show-sql: false
+  open-in-view: false
+
+# Server
+server:
+  port: 8080

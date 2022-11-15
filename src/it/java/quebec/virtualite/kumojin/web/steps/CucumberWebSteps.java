@@ -8,10 +8,10 @@ import quebec.virtualite.kumojin.Application;
 
 import java.util.List;
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @CucumberContextConfiguration
-@SpringBootTest(webEnvironment = DEFINED_PORT, classes = Application.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT, classes = Application.class)
 public class CucumberWebSteps
 {
     @When("we enter the application")
