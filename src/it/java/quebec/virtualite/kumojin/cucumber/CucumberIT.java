@@ -1,4 +1,4 @@
-package quebec.virtualite.kumojin;
+package quebec.virtualite.kumojin.cucumber;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
