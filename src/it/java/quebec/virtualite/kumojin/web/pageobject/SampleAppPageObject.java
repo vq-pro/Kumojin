@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Component
 public class SampleAppPageObject extends PageObject
 {
-
     protected static final String ID_ITEM = "item";
     protected static final String ID_TITLE = "title";
     protected static final String URL = "http://localhost:8080/index.html";

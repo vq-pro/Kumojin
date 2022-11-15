@@ -1,5 +1,6 @@
 package quebec.virtualite.kumojin.web.pageobject;
 
+import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -14,15 +15,10 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+@RequiredArgsConstructor
 public abstract class PageObject
 {
-
     protected final WebClientService web;
-
-    public PageObject(WebClientService web)
-    {
-        this.web = web;
-    }
 
     public String dumpSourceToStdout()
     {

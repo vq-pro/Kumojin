@@ -19,6 +19,7 @@
     <properties>
         <cucumber.version>7.8.1</cucumber.version>
         <junit.version>4.13.2</junit.version>
+        <lombok.version>1.18.24</lombok.version>
         <maven.build-helper.plugin.version>3.0.0</maven.build-helper.plugin.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -115,6 +116,13 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
+        </dependency>
+
+        <!-- Utils -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 
