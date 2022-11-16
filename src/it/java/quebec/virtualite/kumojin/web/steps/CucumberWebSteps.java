@@ -12,6 +12,12 @@ public class CucumberWebSteps
 {
     private final SampleAppPageObject sampleAppPageObject;
 
+    @When("^we add \"(.*)\"$")
+    public void weAdd(String item)
+    {
+        sampleAppPageObject.add(item);
+    }
+
     @When("we enter the application")
     public void weEnterApp()
     {

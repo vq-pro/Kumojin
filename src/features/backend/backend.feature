@@ -1,5 +1,18 @@
 Feature: Backend
 
+  Scenario: Add an item
+    Given these predefined items:
+      | StarShip |
+      | Dragon   |
+    When we add the item "Firefly (fiction)"
+    And we ask for the list
+    Then we get this:
+      | Dragon            |
+      | Firefly (fiction) |
+      | StarShip          |
+
+  # FIXME-1 Add a scenario to check for duplicates
+
   Scenario: Get list of items [when not empty]
     Given these predefined items:
       | StarShip |

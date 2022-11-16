@@ -3,7 +3,6 @@ package quebec.virtualite.kumojin.backend.utils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.springframework.stereotype.Component;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
@@ -11,10 +10,9 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-@Component
+@SuppressWarnings("unused")
 public class RestClient
 {
-
     private static final char NON_BREAKING_SPACE = (char) 0x00A0;
     private static final String XSRF_TOKEN = "XSRF-TOKEN";
     private static final String X_XSRF_TOKEN = "X-XSRF-TOKEN";
@@ -24,7 +22,7 @@ public class RestClient
     private String username;
     private String password;
 
-    public void connect(int serverPort)
+    public RestClient(int serverPort)
     {
         RestAssured.port = serverPort;
         clearUser();
@@ -50,6 +48,14 @@ public class RestClient
     public void logout()
     {
         clearUser();
+    }
+
+    public <T> void post(String url, T payload)
+    {
+        response = requestForWrites()
+            .contentType(JSON)
+            .body(payload)
+            .post(url);
     }
 
     public void post(String url, RestParam param)

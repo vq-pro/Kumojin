@@ -14,6 +14,13 @@ public class EventDomain
 {
     private final EventRepository repository;
 
+    public void addItem(String name)
+    {
+        repository.save(
+            new EventModel()
+                .setName(name));
+    }
+
     public void clear()
     {
         repository.deleteAll();

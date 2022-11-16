@@ -3,6 +3,7 @@ package quebec.virtualite.kumojin.backend.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Value;
+import quebec.virtualite.kumojin.backend.rest.AddItemRequest;
 import quebec.virtualite.kumojin.backend.rest.GetListResponse;
 import quebec.virtualite.kumojin.backend.rest.RestServerTest;
 import quebec.virtualite.kumojin.backend.utils.RestClient;
@@ -18,11 +19,22 @@ public class CucumberBackendSteps
     private final RestClient rest;
 
     public CucumberBackendSteps(
-        RestClient rest,
         @Value("${local.server.port}") int serverPort)
     {
-        this.rest = rest;
-        rest.connect(serverPort);
+        this.rest = new RestClient(serverPort);
+    }
+
+    /**
+     * Server Unit Test: {@link RestServerTest#addItem()}
+     */
+    @When("^we add the item \"(.*)\"$")
+    public void weAddItem(String item)
+    {
+        rest.post("/items",
+            new AddItemRequest()
+                .setName(item));
+
+        assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
     }
 
     /**

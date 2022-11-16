@@ -19,6 +19,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RunWith(MockitoJUnitRunner.class)
 public class RestServerTest
 {
+    private static final String NAME = "name";
+
     @InjectMocks
     private RestServer server;
 
@@ -27,6 +29,22 @@ public class RestServerTest
 
     @Mock
     private List<String> mockedItems;
+
+    @Test
+    public void addItem()
+    {
+        // Given
+        AddItemRequest request = new AddItemRequest()
+            .setName(NAME);
+
+        // When
+        ResponseEntity<Void> response = server.addItem(request);
+
+        // Then
+        verify(mockedDomain).addItem(NAME);
+
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+    }
 
     @Test
     public void getItems()

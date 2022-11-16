@@ -27,6 +27,18 @@ public class EventDomainTest
     private EventRepository mockedEventRepository;
 
     @Test
+    public void addItem()
+    {
+        // When
+        domain.addItem(NAME_A);
+
+        // Then
+        verify(mockedEventRepository).save(
+            new EventModel()
+                .setName(NAME_A));
+    }
+
+    @Test
     public void clear()
     {
         // When

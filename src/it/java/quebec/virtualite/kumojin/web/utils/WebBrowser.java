@@ -1,6 +1,7 @@
 package quebec.virtualite.kumojin.web.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,16 +17,25 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertNotNull;
 
+@Slf4j
+@SuppressWarnings("unused")
 public class WebBrowser
 {
     private final WebDriver driver;
 
     public WebBrowser()
     {
+        log.warn("STARTING...");
+
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(ofMillis(500));
         driver.manage().window().maximize();
+    }
+
+    public void click(String idButton)
+    {
+        element(idButton).click();
     }
 
     public void close()
@@ -90,5 +100,10 @@ public class WebBrowser
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public void set(String id, String value)
+    {
+        element(id).sendKeys(value);
     }
 }
