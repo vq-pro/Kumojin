@@ -9,14 +9,6 @@ public abstract class PageObject
 {
     protected static WebBrowser browser;
 
-    public String dumpSourceToStdout()
-    {
-        String html = browser.getHtml();
-        System.out.println(html);
-
-        return html;
-    }
-
     protected static void startWebBrowser()
     {
         if (browser == null)
