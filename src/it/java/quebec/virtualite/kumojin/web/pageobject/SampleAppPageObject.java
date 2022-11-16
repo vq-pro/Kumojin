@@ -1,23 +1,22 @@
 package quebec.virtualite.kumojin.web.pageobject;
 
-import org.springframework.stereotype.Component;
+import io.cucumber.java.AfterAll;
 import quebec.virtualite.kumojin.web.utils.PageObject;
-import quebec.virtualite.kumojin.web.utils.WebClientService;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Component
 public class SampleAppPageObject extends PageObject
 {
     protected static final String ID_ITEM = "item";
     protected static final String ID_TITLE = "title";
     protected static final String URL = "http://localhost:8080/index.html";
 
-    public SampleAppPageObject(WebClientService web)
+    @AfterAll
+    public static void afterAllScenarios()
     {
-        super(web);
+        stopWeb();
     }
 
     public SampleAppPageObject isViewing()
@@ -28,12 +27,13 @@ public class SampleAppPageObject extends PageObject
 
     public void startApplication()
     {
-        go(URL);
+        startWeb();
+        web.go(URL);
     }
 
     public void validateList(List<String> expectedList)
     {
-        assertThat(elementsText(ID_ITEM))
+        assertThat(web.elementsText(ID_ITEM))
             .isEqualTo(expectedList);
     }
 }
