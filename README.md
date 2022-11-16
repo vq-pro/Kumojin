@@ -23,3 +23,7 @@ Located in .run directory.
 * In true BDD/TDD fashion, I have selected to not use any JS framework, to deliver the simplest implementation that
   respects the present specifications. So straight
   JavaScript was used.
+
+* For persistence, integrated the H2 memory database, also for simplicity. This way, it will run on any local
+  configuration, without the need for a more complex Docker container (or the like). Since the app is JPA, it would be a
+  cinch to convert it to use a PostgreSL instance, just a matter of datasource definition.

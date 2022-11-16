@@ -16,11 +16,11 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertNotNull;
 
-public class WebClientService
+public class WebBrowser
 {
     private final WebDriver driver;
 
-    public WebClientService()
+    public WebBrowser()
     {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();

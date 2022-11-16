@@ -16,7 +16,7 @@ public class SampleAppPageObject extends PageObject
     @AfterAll
     public static void afterAllScenarios()
     {
-        stopWeb();
+        stopWebBrowser();
     }
 
     public SampleAppPageObject isViewing()
@@ -27,13 +27,13 @@ public class SampleAppPageObject extends PageObject
 
     public void startApplication()
     {
-        startWeb();
-        web.go(URL);
+        startWebBrowser();
+        browser.go(URL);
     }
 
     public void validateList(List<String> expectedList)
     {
-        assertThat(web.elementsText(ID_ITEM))
+        assertThat(browser.elementsText(ID_ITEM))
             .isEqualTo(expectedList);
     }
 }

@@ -7,30 +7,30 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class PageObject
 {
-    protected static WebClientService web;
+    protected static WebBrowser browser;
 
     public String dumpSourceToStdout()
     {
-        String html = web.getHtml();
+        String html = browser.getHtml();
         System.out.println(html);
 
         return html;
     }
 
-    protected static void startWeb()
+    protected static void startWebBrowser()
     {
-        if (web == null)
+        if (browser == null)
         {
-            web = new WebClientService();
+            browser = new WebBrowser();
         }
     }
 
-    protected static void stopWeb()
+    protected static void stopWebBrowser()
     {
-        if (web != null)
+        if (browser != null)
         {
-            web.close();
-            web = null;
+            browser.close();
+            browser = null;
         }
     }
 
@@ -44,17 +44,17 @@ public abstract class PageObject
     protected void validateElementEnabled(String idElement)
     {
         assertThat("'" + idElement + "' should not be disabled",
-            web.elementAttribute(idElement, "disabled"), not("disabled"));
+            browser.elementAttribute(idElement, "disabled"), not("disabled"));
     }
 
     protected void validateElementExists(String idElement)
     {
-        assertTrue("Element " + idElement + " doesn't exist", web.exists(idElement));
+        assertTrue("Element " + idElement + " doesn't exist", browser.exists(idElement));
     }
 
     protected void validateElementText(String idElement, String expectedText)
     {
         assertThat("Bad text for '" + idElement + "'",
-            web.elementText(idElement), is(expectedText));
+            browser.elementText(idElement), is(expectedText));
     }
 }
