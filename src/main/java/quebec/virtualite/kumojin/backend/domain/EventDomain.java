@@ -1,24 +1,41 @@
 package quebec.virtualite.kumojin.backend.domain;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
+@RequiredArgsConstructor
 @Service
 public class EventDomain
 {
-    private final List<String> items = new ArrayList<>();
+    private final EventRepository repository;
+
+    public void clear()
+    {
+        repository.deleteAll();
+    }
 
     public List<String> getItems()
     {
+        List<String> items = new ArrayList<>();
+        for (EventModel model : repository.findAll())
+        {
+            items.add(model.getName());
+        }
+
         return items;
     }
 
     public void setItems(List<String> items)
     {
-        this.items.clear();
-        this.items.addAll(items);
-        this.items.sort(String::compareTo);
+        List<EventModel> models = items.stream()
+            .map(item -> new EventModel().setName(item))
+            .collect(toList());
+
+        repository.saveAll(models);
     }
 }
