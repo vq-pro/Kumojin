@@ -15,7 +15,6 @@ public class CucumberWebSteps
     @When("we enter the application")
     public void weEnterApp()
     {
-        //        fail("enter app");
         sampleAppPageObject.startApplication();
     }
 

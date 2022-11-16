@@ -20,5 +20,6 @@ Located in .run directory.
   to start/stop the backend process from the frontend automatically. For simplicity's sake, I set it up as a single
   project and a single Spring Boot application. This way the embedded Tomcat instance will serve both sides.
 
-* I have also selected to not use any JS framework, due to the simplicity of the functionality definition. So straight
+* In true BDD/TDD fashion, I have selected to not use any JS framework, to deliver the simplest implementation that
+  respects the present specifications. So straight
   JavaScript was used.

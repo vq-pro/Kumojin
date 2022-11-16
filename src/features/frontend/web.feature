@@ -1,7 +1,10 @@
 Feature: Web
 
-  Scenario: First web scenario
+  Scenario: Display list
+    Given these predefined items:
+      | StarShip |
+      | Dragon   |
     When we enter the application
     Then we see this list:
-      | Apple  |
-      | Banana |
+      | Dragon   |
+      | StarShip |

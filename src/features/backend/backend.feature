@@ -1,7 +1,10 @@
 Feature: Backend
 
-  Scenario: First backend scenario
+  Scenario: Get list of items
+    Given these predefined items:
+      | StarShip |
+      | Dragon   |
     When we ask for the list
     Then we get this:
-      | Apple  |
-      | Banana |
+      | Dragon   |
+      | StarShip |
