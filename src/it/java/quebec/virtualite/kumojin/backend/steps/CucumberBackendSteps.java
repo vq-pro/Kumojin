@@ -9,6 +9,7 @@ import quebec.virtualite.kumojin.backend.utils.RestClient;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,6 +32,15 @@ public class CucumberBackendSteps
     public void weAskForTheList()
     {
         rest.get("/items");
+    }
+
+    @Then("we get an empty list")
+    public void weGetEmptyList()
+    {
+        assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
+
+        GetListResponse response = rest.response().as(GetListResponse.class);
+        assertThat(response.getItems()).isEqualTo(emptyList());
     }
 
     @Then("we get this:")

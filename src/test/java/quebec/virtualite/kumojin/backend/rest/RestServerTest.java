@@ -10,6 +10,7 @@ import quebec.virtualite.kumojin.backend.domain.EventDomain;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -44,5 +45,24 @@ public class RestServerTest
         assertThat(response.getBody()).isEqualTo(
             new GetListResponse()
                 .setItems(mockedItems));
+    }
+
+    @Test
+    public void getItems_whenEmpty_returnsEmptyList()
+    {
+        // Given
+        given(mockedDomain.getItems())
+            .willReturn(emptyList());
+
+        // When
+        ResponseEntity<GetListResponse> response = server.getItems();
+
+        // Then
+        verify(mockedDomain).getItems();
+
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+        assertThat(response.getBody()).isEqualTo(
+            new GetListResponse()
+                .setItems(emptyList()));
     }
 }

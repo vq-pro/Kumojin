@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -52,6 +53,20 @@ public class EventDomainTest
         verify(mockedEventRepository).findAll();
 
         assertThat(results).isEqualTo(asList(NAME_A, NAME_B));
+    }
+
+    @Test
+    public void getItems_whenEmpty_returnsEmptyList()
+    {
+        // Given
+        given(mockedEventRepository.findAll())
+            .willReturn(emptyList());
+
+        // When
+        List<String> results = domain.getItems();
+
+        // Then
+        assertThat(results).isEqualTo(emptyList());
     }
 
     @Test
