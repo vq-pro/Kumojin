@@ -48,24 +48,24 @@
         }
 
         fetch(urlBackend, options)
-            .then((response) =>
+            .then(() =>
             {
-                if (response.status === 200)
-                {
-                    getAndDisplayList();
+                // if (response.status === 200)
+                // {
+                getAndDisplayList();
 
-                } else if (response.status === 400)
-                {
-                    alert("Incomplete event");
-
-                } else if (response.status === 409)
-                {
-                    alert("Duplicate event");
-
-                } else
-                {
-                    alert("Unknown error - " + response.status);
-                }
+                // } else if (response.status === 400)
+                // {
+                //     alert("Incomplete event");
+                //
+                // } else if (response.status === 409)
+                // {
+                //     alert("Duplicate event");
+                //
+                // } else
+                // {
+                //     alert("Unknown error - " + response.status);
+                // }
             })
             .catch((error) =>
             {
