@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SampleAppPageObject extends PageObject
 {
     private static final String ID_ADD_BUTTON = "add";
+    private static final String ID_ERROR_MESSAGE = "error";
     private static final String ID_ITEM = "item";
     private static final String ID_NAME = "name";
     private static final String ID_TITLE = "title";
@@ -30,7 +31,7 @@ public class SampleAppPageObject extends PageObject
 
     public SampleAppPageObject isViewing()
     {
-        validateIsDisplayed(ID_TITLE, "Kumojin");
+        validateDisplayed(ID_TITLE, "Kumojin");
         return this;
     }
 
@@ -40,9 +41,21 @@ public class SampleAppPageObject extends PageObject
         browser.go(URL);
     }
 
+    public SampleAppPageObject validateErrorHidden()
+    {
+        validateHidden(ID_ERROR_MESSAGE);
+        return this;
+    }
+
+    public void validateErrorMessage(String expectedMessage)
+    {
+        validateDisplayed(ID_ERROR_MESSAGE, expectedMessage);
+    }
+
     public void validateList(List<String> expectedList)
     {
-        assertThat(browser.elementsText(ID_ITEM))
-            .isEqualTo(expectedList);
+        poll(() ->
+            assertThat(browser.elementsText(ID_ITEM))
+                .isEqualTo(expectedList));
     }
 }

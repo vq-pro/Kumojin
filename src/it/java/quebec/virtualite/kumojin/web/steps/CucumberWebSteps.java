@@ -24,11 +24,20 @@ public class CucumberWebSteps
         sampleAppPageObject.startApplication();
     }
 
+    @Then("^we see this error message: \"(.*)\"$")
+    public void weSeeErrorMessage(String expectedMessage)
+    {
+        sampleAppPageObject
+            .isViewing()
+            .validateErrorMessage(expectedMessage);
+    }
+
     @Then("we see this list:")
     public void weSeeThisList(List<String> expectedList)
     {
         sampleAppPageObject
             .isViewing()
+            .validateErrorHidden()
             .validateList(expectedList);
     }
 }

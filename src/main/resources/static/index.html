@@ -12,6 +12,7 @@
 <hr>
 
 <h3>New event:</h3>
+<div id="error" hidden></div>
 <form>
     <label for="name">Name:</label>
     <input id="name" type="text"/>
@@ -23,7 +24,7 @@
 <hr>
 
 <h3>Event List:</h3>
-<ul>
+<ul id="list">
 </ul>
 </body>
 
@@ -33,10 +34,8 @@
 
     function addItem()
     {
-        let fieldName = document.querySelector('#name');
-
         const payload = {
-            name: fieldName.value
+            name: getInputField('name')
         }
 
         const options = {
@@ -48,24 +47,24 @@
         }
 
         fetch(urlBackend, options)
-            .then(() =>
+            .then((response) =>
             {
-                // if (response.status === 200)
-                // {
-                getAndDisplayList();
+                if (response.status === 200)
+                {
+                    getAndDisplayList();
 
-                // } else if (response.status === 400)
-                // {
-                //     alert("Incomplete event");
-                //
-                // } else if (response.status === 409)
-                // {
-                //     alert("Duplicate event");
-                //
-                // } else
-                // {
-                //     alert("Unknown error - " + response.status);
-                // }
+                } else if (response.status === 400)
+                {
+                    setError('Invalid item');
+
+                    // } else if (response.status === 409)
+                    // {
+                    //     alert("Duplicate event");
+                    //
+                } else
+                {
+                    alert("Unknown error - " + response.status);
+                }
             })
             .catch((error) =>
             {
@@ -75,13 +74,12 @@
 
     function clearEvent()
     {
-        let fieldName = document.querySelector('#name');
-        fieldName.value = "";
+        setInputField('name', '');
     }
 
     function clearList()
     {
-        document.querySelector('ul').innerHTML = "";
+        setField('list', '');
     }
 
     function displayItem(text)
@@ -114,6 +112,32 @@
             {
                 alert("Cannot connect to the backend - " + error)
             });
+    }
+
+    function getInputField(id)
+    {
+        return document.querySelector('#' + id).value;
+    }
+
+    function setError(error)
+    {
+        showField('error')
+        setField('error', error);
+    }
+
+    function setField(id, value)
+    {
+        document.querySelector('#' + id).innerHTML = value;
+    }
+
+    function setInputField(id, value)
+    {
+        document.querySelector('#' + id).value = value;
+    }
+
+    function showField(id)
+    {
+        document.querySelector('#' + id).hidden = false;
     }
 
     getAndDisplayList();
