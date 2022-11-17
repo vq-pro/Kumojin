@@ -11,6 +11,10 @@ Feature: Backend
       | Firefly (fiction) |
       | StarShip          |
 
+  Scenario: Add an item - ERROR - Empty name
+    When we add the item with an empty name
+    Then we get a 400 error
+
   # FIXME-1 Add a scenario to check for duplicates
 
   Scenario: Get list of items [when not empty]

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import quebec.virtualite.kumojin.backend.domain.EventDomain;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 public class RestServer
@@ -15,10 +17,10 @@ public class RestServer
     private final EventDomain domain;
 
     @PostMapping(value = "/items", consumes = "application/json")
-    public ResponseEntity<Void> addItem(@RequestBody AddItemRequest request)
+    public ResponseEntity<Void> addItem(@Valid @RequestBody AddItemRequest request)
     {
         domain.addItem(request.getName());
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/items", produces = "application/json")

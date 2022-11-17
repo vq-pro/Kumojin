@@ -38,12 +38,27 @@ public class CucumberBackendSteps
     }
 
     /**
+     * Server Unit Test: {@link RestServerTest#addItem()}
+     */
+    @When("we add the item with an empty name")
+    public void weAddItemWithEmptyName()
+    {
+        rest.post("/items", new AddItemRequest());
+    }
+
+    /**
      * Server Unit Test: {@link RestServerTest#getItems()}
      */
     @When("we ask for the list")
     public void weAskForTheList()
     {
         rest.get("/items");
+    }
+
+    @When("^we get a (.*) error$")
+    public void weGetError(int expectedStatusCode)
+    {
+        assertThat(rest.response().statusCode()).isEqualTo(expectedStatusCode);
     }
 
     @Then("we get an empty list")
