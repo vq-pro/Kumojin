@@ -33,7 +33,15 @@ public class CucumberBackendSteps
         rest.post("/items",
             new AddItemRequest()
                 .setName(item));
+    }
 
+    /**
+     * Server Unit Test: {@link RestServerTest#addItem()}
+     */
+    @When("^we add the item \"(.*)\" successfully$")
+    public void weAddItemSuccessfully(String item)
+    {
+        weAddItem(item);
         assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
     }
 

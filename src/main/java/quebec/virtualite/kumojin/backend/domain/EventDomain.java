@@ -26,6 +26,11 @@ public class EventDomain
         repository.deleteAll();
     }
 
+    public boolean exists(String name)
+    {
+        return repository.findByName(name) != null;
+    }
+
     public List<String> getItems()
     {
         List<String> items = new ArrayList<>();

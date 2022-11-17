@@ -4,18 +4,22 @@ Feature: Backend
     Given these predefined items:
       | StarShip |
       | Dragon   |
-    When we add the item "Firefly (fiction)"
+    When we add the item "Firefly (fiction)" successfully
     And we ask for the list
     Then we get this:
       | Dragon            |
       | Firefly (fiction) |
       | StarShip          |
 
+  Scenario: Add an item - ERROR - Duplicate name
+    Given these predefined items:
+      | Dragon |
+    When we add the item "Dragon"
+    Then we get a 409 error
+
   Scenario: Add an item - ERROR - Empty name
     When we add the item with an empty name
     Then we get a 400 error
-
-  # FIXME-1 Add a scenario to check for duplicates
 
   Scenario: Get list of items [when not empty]
     Given these predefined items:

@@ -10,6 +10,8 @@ import quebec.virtualite.kumojin.backend.domain.EventDomain;
 
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
+
 @RequiredArgsConstructor
 @RestController
 public class RestServer
@@ -19,6 +21,9 @@ public class RestServer
     @PostMapping(value = "/items", consumes = "application/json")
     public ResponseEntity<Void> addItem(@Valid @RequestBody AddItemRequest request)
     {
+        if (domain.exists(request.getName()))
+            return ResponseEntity.status(CONFLICT).build();
+
         domain.addItem(request.getName());
         return ResponseEntity.ok().build();
     }

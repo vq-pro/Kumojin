@@ -49,6 +49,34 @@ public class EventDomainTest
     }
 
     @Test
+    public void exists_whenFalse()
+    {
+        // When
+        boolean result = domain.exists(NAME_A);
+
+        // Then
+        verify(mockedEventRepository).findByName(NAME_A);
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void exists_whenTrue()
+    {
+        // Given
+        given(mockedEventRepository.findByName(NAME_A))
+            .willReturn(new EventModel().setName(NAME_A));
+
+        // When
+        boolean result = domain.exists(NAME_A);
+
+        // Then
+        verify(mockedEventRepository).findByName(NAME_A);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
     public void getItems()
     {
         // Given

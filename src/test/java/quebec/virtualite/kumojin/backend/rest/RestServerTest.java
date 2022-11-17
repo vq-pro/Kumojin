@@ -12,8 +12,11 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,9 +44,29 @@ public class RestServerTest
         ResponseEntity<Void> response = server.addItem(request);
 
         // Then
+        verify(mockedDomain).exists(NAME);
         verify(mockedDomain).addItem(NAME);
 
         assertThat(response.getStatusCode()).isEqualTo(OK);
+    }
+
+    @Test
+    public void addItem_whenDuplicate_return409Status()
+    {
+        // Given
+        AddItemRequest request = new AddItemRequest()
+            .setName(NAME);
+
+        given(mockedDomain.exists(NAME))
+            .willReturn(true);
+
+        // When
+        ResponseEntity<Void> response = server.addItem(request);
+
+        // Then
+        verify(mockedDomain, never()).addItem(anyString());
+
+        assertThat(response.getStatusCode()).isEqualTo(CONFLICT);
     }
 
     @Test
