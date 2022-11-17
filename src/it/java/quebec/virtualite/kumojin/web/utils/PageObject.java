@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 @SuppressWarnings("unused")
 public abstract class PageObject
 {
-    private static final long TIMEOUT = 2000;
+    private static final long TIMEOUT = 5000;
 
     protected static WebBrowser browser;
 

@@ -5,6 +5,12 @@
     <title id="title">Kumojin</title>
 </head>
 
+<style>
+    .div-error {
+        color: red;
+    }
+</style>
+
 <body>
 
 <h1>Events</h1>
@@ -12,7 +18,9 @@
 <hr>
 
 <h3>New event:</h3>
-<div id="error" hidden></div>
+<div id="error" class="div-error" hidden></div>
+<br>
+
 <form>
     <label for="name">Name:</label>
     <input id="name" type="text"/>
@@ -29,6 +37,8 @@
 </body>
 
 <script type="application/javascript">
+
+    // FIXME-1 Put functions in separate JS files
 
     let urlBackend = "http://localhost:8080/items";
 
@@ -57,10 +67,10 @@
                 {
                     setError('Invalid item');
 
-                    // } else if (response.status === 409)
-                    // {
-                    //     alert("Duplicate event");
-                    //
+                } else if (response.status === 409)
+                {
+                    setError('Duplicate item');
+
                 } else
                 {
                     alert("Unknown error - " + response.status);

@@ -20,8 +20,15 @@ Feature: Web
       | Firefly (fiction) |
       | StarShip          |
 
-#  FIXME-1 Add an item - ERROR - Duplicate item
+  Scenario: Add an item - ERROR - Duplicate item
+    Given these predefined items:
+      | Dragon |
+    And we enter the application
+    When we add "Dragon"
+    Then we see this error message: "Duplicate item"
+
 #  FIXME-1 Add an item - ERROR - Error disappears after successful add
+#  FIXME-1 Add an item - ERROR - Other error
 
   Scenario: Add an item - ERROR - Invalid item
     Given we enter the application
