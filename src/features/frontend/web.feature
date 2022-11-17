@@ -1,4 +1,3 @@
-@WIP
 Feature: Web
 
   Scenario: Display list on entering application
@@ -21,9 +20,6 @@ Feature: Web
       | Firefly (fiction) |
       | StarShip          |
 
-#  FIXME-1 Add an item - ERROR - Error disappears after successful add
-#  FIXME-1 Add an item - ERROR - Other error
-
   Scenario Outline: Add an item - ERROR - <error message>
     Given these predefined items:
       | Dragon |
@@ -31,6 +27,17 @@ Feature: Web
     When we add "<item>"
     Then we see this error message: "<error message>"
     Examples:
-      | item   | error message  |
-      | Dragon | Duplicate item |
-      |        | Invalid item   |
+      | item      | error message               |
+      | Dragon    | Duplicate item              |
+      | error 204 | Internal server error (204) |
+      | error 500 | Internal server error (500) |
+      |           | Invalid item                |
+
+  Scenario: Add an item - ERROR - Error disappears after successful add
+    Given we enter the application
+    And we add ""
+    And we see this error message: "Invalid item"
+    When we add "Dragon"
+    Then we don't see an error message
+    And we see this list:
+      | Dragon |

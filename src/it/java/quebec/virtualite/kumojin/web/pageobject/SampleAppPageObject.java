@@ -43,7 +43,8 @@ public class SampleAppPageObject extends PageObject
 
     public SampleAppPageObject validateErrorHidden()
     {
-        validateHidden(ID_ERROR_MESSAGE);
+        poll(() -> validateHidden(ID_ERROR_MESSAGE));
+
         return this;
     }
 
@@ -54,8 +55,6 @@ public class SampleAppPageObject extends PageObject
 
     public void validateList(List<String> expectedList)
     {
-        poll(() ->
-            assertThat(browser.elementsText(ID_ITEM))
-                .isEqualTo(expectedList));
+        poll(() -> assertThat(browser.elementsText(ID_ITEM)).isEqualTo(expectedList));
     }
 }

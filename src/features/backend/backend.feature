@@ -11,15 +11,17 @@ Feature: Backend
       | Firefly (fiction) |
       | StarShip          |
 
-  Scenario: Add an item - ERROR - Duplicate name
+  Scenario Outline: Add an item - ERROR - <error case>
     Given these predefined items:
       | Dragon |
-    When we add the item "Dragon"
-    Then we get a 409 error
-
-  Scenario: Add an item - ERROR - Empty name
-    When we add the item with an empty name
-    Then we get a 400 error
+    When we add the item "<item>"
+    Then we get a <code> error
+    Examples:
+      | error case          | item      | code |
+      | Duplicate name      | Dragon    | 409  |
+      | Empty name          |           | 400  |
+      | Error 418 generator | error 418 | 418  |
+      | Error 500 generator | error 500 | 500  |
 
   Scenario: Get list of items [when not empty]
     Given these predefined items:

@@ -11,6 +11,7 @@ import quebec.virtualite.kumojin.backend.utils.RestClient;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static javax.servlet.http.HttpServletResponse.SC_CREATED;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,7 +43,7 @@ public class CucumberBackendSteps
     public void weAddItemSuccessfully(String item)
     {
         weAddItem(item);
-        assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
+        assertThat(rest.response().statusCode()).isEqualTo(SC_CREATED);
     }
 
     /**

@@ -24,6 +24,12 @@ public class CucumberWebSteps
         sampleAppPageObject.startApplication();
     }
 
+    @Then("we don't see an error message")
+    public void weDontSeeErrorMessage()
+    {
+        sampleAppPageObject.validateErrorHidden();
+    }
+
     @Then("^we see this error message: \"(.*)\"$")
     public void weSeeErrorMessage(String expectedMessage)
     {
@@ -37,7 +43,6 @@ public class CucumberWebSteps
     {
         sampleAppPageObject
             .isViewing()
-            .validateErrorHidden()
             .validateList(expectedList);
     }
 }

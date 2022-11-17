@@ -16,7 +16,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.I_AM_A_TEAPOT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,7 +50,7 @@ public class RestServerTest
         verify(mockedDomain).exists(NAME);
         verify(mockedDomain).addItem(NAME);
 
-        assertThat(response.getStatusCode()).isEqualTo(OK);
+        assertThat(response.getStatusCode()).isEqualTo(CREATED);
     }
 
     @Test
@@ -67,6 +70,22 @@ public class RestServerTest
         verify(mockedDomain, never()).addItem(anyString());
 
         assertThat(response.getStatusCode()).isEqualTo(CONFLICT);
+    }
+
+    @Test
+    public void addItem_whenErrorCodeGenerator_return418Status()
+    {
+        // Given
+        AddItemRequest request = new AddItemRequest()
+            .setName("error 418");
+
+        // When
+        ResponseEntity<Void> response = server.addItem(request);
+
+        // Then
+        verifyNoInteractions(mockedDomain);
+
+        assertThat(response.getStatusCode()).isEqualTo(I_AM_A_TEAPOT);
     }
 
     @Test
