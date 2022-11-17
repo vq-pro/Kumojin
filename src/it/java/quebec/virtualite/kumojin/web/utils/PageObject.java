@@ -9,7 +9,8 @@ import static org.junit.Assert.assertTrue;
 @SuppressWarnings("unused")
 public abstract class PageObject
 {
-    private static final long TIMEOUT = 5000;
+    private static final long POLL_INTERVAL = 250;
+    private static final long POLL_TIMEOUT = 3000;
 
     protected static WebBrowser browser;
 
@@ -32,27 +33,29 @@ public abstract class PageObject
 
     protected void poll(Runnable callback)
     {
-        RuntimeException exception;
-        long now;
+        Throwable exception;
+        long elapsed;
         long start = System.currentTimeMillis();
 
         do
         {
+            sleep(POLL_INTERVAL);
+
             try
             {
                 callback.run();
                 return;
             }
-            catch (RuntimeException t)
+            catch (Throwable t)
             {
                 exception = t;
             }
 
-            now = System.currentTimeMillis();
+            elapsed = System.currentTimeMillis() - start;
         }
-        while (now - start < TIMEOUT);
+        while (elapsed < POLL_TIMEOUT);
 
-        throw exception;
+        throw new RuntimeException(exception);
     }
 
     protected void validateDisabled(String idElement)
@@ -92,5 +95,17 @@ public abstract class PageObject
         validateExists(idElement);
         assertThat("'" + idElement + "' should be hidden",
             browser.elementAttribute(idElement, "hidden"), is("true"));
+    }
+
+    private void sleep(long delay)
+    {
+        try
+        {
+            Thread.sleep(delay);
+        }
+        catch (InterruptedException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }
