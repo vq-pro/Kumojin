@@ -1,6 +1,6 @@
 Feature: Web
 
-  Scenario: Display list
+  Scenario: Display list on entering application
     Given these predefined items:
       | StarShip |
       | Dragon   |

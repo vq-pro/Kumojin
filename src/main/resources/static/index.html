@@ -6,18 +6,30 @@
 </head>
 
 <body>
-<h1>Hello world!</h1>
-<ul>
-</ul>
+
+<h1>Events</h1>
+
+<hr>
+
+<h3>New event:</h3>
 <form>
     <label for="name">Name:</label>
     <input id="name" type="text"/>
 
     <input id="add" type="button" value="Add" onclick="addItem()"/>
 </form>
+
+<br>
+<hr>
+
+<h3>Event List:</h3>
+<ul>
+</ul>
 </body>
 
 <script type="application/javascript">
+
+    let urlBackend = "http://localhost:8080/items";
 
     function addItem()
     {
@@ -35,16 +47,36 @@
             }
         }
 
-        fetch("http://localhost:8080/items", options)
-            .then(() =>
+        fetch(urlBackend, options)
+            .then((response) =>
             {
-                fieldName.value = "";
-                getAndDisplayList();
+                if (response.status === 200)
+                {
+                    getAndDisplayList();
+
+                } else if (response.status === 400)
+                {
+                    alert("Incomplete event");
+
+                } else if (response.status === 409)
+                {
+                    alert("Duplicate event");
+
+                } else
+                {
+                    alert("Unknown error - " + response.status);
+                }
             })
             .catch((error) =>
             {
                 alert("Cannot connect to the backend - " + error)
             });
+    }
+
+    function clearEvent()
+    {
+        let fieldName = document.querySelector('#name');
+        fieldName.value = "";
     }
 
     function clearList()
@@ -63,9 +95,10 @@
 
     function getAndDisplayList()
     {
+        clearEvent();
         clearList();
 
-        fetch("http://localhost:8080/items")
+        fetch(urlBackend)
             .then(response =>
             {
                 return response.json();
