@@ -1,3 +1,4 @@
+@WIP
 Feature: Web
 
   Scenario: Display list on entering application
@@ -20,17 +21,16 @@ Feature: Web
       | Firefly (fiction) |
       | StarShip          |
 
-  Scenario: Add an item - ERROR - Duplicate item
-    Given these predefined items:
-      | Dragon |
-    And we enter the application
-    When we add "Dragon"
-    Then we see this error message: "Duplicate item"
-
 #  FIXME-1 Add an item - ERROR - Error disappears after successful add
 #  FIXME-1 Add an item - ERROR - Other error
 
-  Scenario: Add an item - ERROR - Invalid item
-    Given we enter the application
-    When we add ""
-    Then we see this error message: "Invalid item"
+  Scenario Outline: Add an item - ERROR - <error message>
+    Given these predefined items:
+      | Dragon |
+    And we enter the application
+    When we add "<item>"
+    Then we see this error message: "<error message>"
+    Examples:
+      | item   | error message  |
+      | Dragon | Duplicate item |
+      |        | Invalid item   |
