@@ -1,46 +1,61 @@
 Feature: Web
 
-  @WIP
   Scenario: Display event list on entering application
     Given these predefined events:
-      | name     | description                |
-      | StarShip | The new bigger ship.       |
-      | Dragon   | The original crew carrier. |
+      | name    | description        |
+      | Wedding | Wedding in Paris.  |
+      | Funeral | Funeral in London. |
     When we enter the application
     Then we see this event list:
-      | name     | description                |
-      | Dragon   | The original crew carrier. |
-      | StarShip | The new bigger ship.       |
+      | name    | description        |
+      | Funeral | Funeral in London. |
+      | Wedding | Wedding in Paris.  |
 
-  Scenario: Add an item
-    Given these predefined items:
-      | StarShip |
-      | Dragon   |
+  Scenario: Add an event
+    Given these predefined events:
+      | name    | description        |
+      | Wedding | Wedding in Paris.  |
+      | Funeral | Funeral in London. |
     And we enter the application
-    When we add "Firefly (fiction)"
-    Then we see this list:
-      | Dragon            |
-      | Firefly (fiction) |
-      | StarShip          |
+    When we add this event:
+      | name                  | description                                |
+      | Dinner (or something) | Not sure whether dinner is right for this. |
+    Then we see this event list:
+      | name                  | description                                |
+      | Dinner (or something) | Not sure whether dinner is right for this. |
+      | Funeral               | Funeral in London.                         |
+      | Wedding               | Wedding in Paris.                          |
 
-  Scenario Outline: Add an item - ERROR - <error message>
-    Given these predefined items:
-      | Dragon |
+  Scenario Outline: Add an event - ERROR - <error message>
+    Given these predefined events:
+      | name    | description        |
+      | Funeral | Funeral in London. |
     And we enter the application
-    When we add "<item>"
+    When we add this event:
+      | name   | description   |
+      | <name> | <description> |
     Then we see this error message: "<error message>"
     Examples:
-      | item      | error message               |
-      | Dragon    | Duplicate item              |
-      | error 204 | Internal server error (204) |
-      | error 500 | Internal server error (500) |
-      |           | Invalid item                |
+      | name           | description             | error message               |
+      | Funeral        | Some other description. | Duplicate event             |
+      |                | No name.                | Invalid event               |
+      | No description |                         | Invalid event               |
+      | error 204      | -                       | Internal server error (204) |
+      | error 500      | -                       | Internal server error (500) |
 
-  Scenario: Add an item - ERROR - Error disappears after successful add
+  Scenario: Add an event - ERROR - Error disappears after successful add
     Given we enter the application
-    And we add ""
-    And we see this error message: "Invalid item"
-    When we add "Dragon"
+    And we add this event:
+      | name | description |
+      |      |             |
+    And we see this error message: "Invalid event"
+    When we add this event:
+      | name | description |
+      |      |             |
+    When we add this event:
+      | name   | description        |
+      | Dinner | Dinner, all right! |
     Then we don't see an error message
-    And we see this list:
-      | Dragon |
+    Then we see this event list:
+      | name   | description        |
+      | Dinner | Dinner, all right! |

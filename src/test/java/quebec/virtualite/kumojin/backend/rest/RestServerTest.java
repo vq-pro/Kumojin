@@ -12,7 +12,7 @@ import quebec.virtualite.kumojin.backend.domain.EventModel;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -26,6 +26,7 @@ import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
 @RunWith(MockitoJUnitRunner.class)
 public class RestServerTest
 {
+    private static final String DESC = "desc";
     private static final String DESC_A = "descA";
     private static final String DESC_B = "descB";
     private static final String NAME = "name";
@@ -45,50 +46,54 @@ public class RestServerTest
     }
 
     @Test
-    public void addItem()
+    public void addEvent()
     {
         // Given
-        AddItemRequest request = new AddItemRequest()
-            .setName(NAME);
+        AddEventRequest request = new AddEventRequest()
+            .setName(NAME)
+            .setDescription(DESC);
 
         // When
-        ResponseEntity<Void> response = server.addItem(request);
+        ResponseEntity<Void> response = server.addEvent(request);
 
         // Then
         verify(mockedDomain).exists(NAME);
-        verify(mockedDomain).addItem(NAME);
+        verify(mockedDomain).addEvent(new EventModel()
+            .setName(NAME)
+            .setDescription(DESC));
 
         assertThat(response.getStatusCode()).isEqualTo(CREATED);
     }
 
     @Test
-    public void addItem_whenDuplicate_return409Status()
+    public void addEvent_whenDuplicate_return409Status()
     {
         // Given
-        AddItemRequest request = new AddItemRequest()
-            .setName(NAME);
+        AddEventRequest request = new AddEventRequest()
+            .setName(NAME)
+            .setDescription(DESC);
 
         given(mockedDomain.exists(NAME))
             .willReturn(true);
 
         // When
-        ResponseEntity<Void> response = server.addItem(request);
+        ResponseEntity<Void> response = server.addEvent(request);
 
         // Then
-        verify(mockedDomain, never()).addItem(anyString());
+        verify(mockedDomain, never()).addEvent(any());
 
         assertThat(response.getStatusCode()).isEqualTo(CONFLICT);
     }
 
     @Test
-    public void addItem_whenErrorCodeGenerator_return418Status()
+    public void addEvent_whenErrorCodeGenerator_return418Status()
     {
         // Given
-        AddItemRequest request = new AddItemRequest()
+        AddEventRequest request = new AddEventRequest()
             .setName("error 418");
 
         // When
-        ResponseEntity<Void> response = server.addItem(request);
+        ResponseEntity<Void> response = server.addEvent(request);
 
         // Then
         verifyNoInteractions(mockedDomain);

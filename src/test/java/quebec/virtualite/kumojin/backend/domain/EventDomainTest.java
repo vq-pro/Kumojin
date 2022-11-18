@@ -17,8 +17,7 @@ import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
 @RunWith(MockitoJUnitRunner.class)
 public class EventDomainTest
 {
-    private static final String NAME_A = "A";
-    private static final String NAME_B = "B";
+    private static final String NAME = "N";
 
     @InjectMocks
     private EventDomain domain;
@@ -33,15 +32,13 @@ public class EventDomainTest
     private EventModel mockedEventB;
 
     @Test
-    public void addItem()
+    public void addEvent()
     {
         // When
-        domain.addItem(NAME_A);
+        domain.addEvent(mockedEventA);
 
         // Then
-        verify(mockedEventRepository).save(
-            new EventModel()
-                .setName(NAME_A));
+        verify(mockedEventRepository).save(mockedEventA);
     }
 
     @Test
@@ -58,10 +55,10 @@ public class EventDomainTest
     public void exists_whenFalse()
     {
         // When
-        boolean result = domain.exists(NAME_A);
+        boolean result = domain.exists(NAME);
 
         // Then
-        verify(mockedEventRepository).findByName(NAME_A);
+        verify(mockedEventRepository).findByName(NAME);
 
         assertThat(result).isFalse();
     }
@@ -70,14 +67,14 @@ public class EventDomainTest
     public void exists_whenTrue()
     {
         // Given
-        given(mockedEventRepository.findByName(NAME_A))
+        given(mockedEventRepository.findByName(NAME))
             .willReturn(mockedEventA);
 
         // When
-        boolean result = domain.exists(NAME_A);
+        boolean result = domain.exists(NAME);
 
         // Then
-        verify(mockedEventRepository).findByName(NAME_A);
+        verify(mockedEventRepository).findByName(NAME);
 
         assertThat(result).isTrue();
     }

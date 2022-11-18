@@ -3,7 +3,7 @@ package quebec.virtualite.kumojin.backend.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Value;
-import quebec.virtualite.kumojin.backend.rest.AddItemRequest;
+import quebec.virtualite.kumojin.backend.rest.AddEventRequest;
 import quebec.virtualite.kumojin.backend.rest.GetListResponse;
 import quebec.virtualite.kumojin.backend.rest.RestServerTest;
 import quebec.virtualite.kumojin.backend.utils.RestClient;
@@ -27,52 +27,44 @@ public class CucumberBackendSteps
     }
 
     /**
-     * Server Unit Test: {@link RestServerTest#addItem()}
+     * Server Unit Test: {@link RestServerTest#addEvent()}
      */
-    @When("^we add the item \"(.*)\"$")
-    public void weAddItem(String item)
+    @When("we POST this event:")
+    public void postEvent(EventDefinition event)
     {
-        rest.post("/items",
-            new AddItemRequest()
-                .setName(item));
+        rest.post("/events",
+            new AddEventRequest()
+                .setName(event.getName())
+                .setDescription(event.getDescription()));
     }
 
     /**
-     * Server Unit Test: {@link RestServerTest#addItem()}
+     * Server Unit Test: {@link RestServerTest#addEvent()}
      */
-    @When("^we add the item \"(.*)\" successfully$")
-    public void weAddItemSuccessfully(String item)
+    @When("we POST this event successfully:")
+    public void postEventSuccessfully(EventDefinition event)
     {
-        weAddItem(item);
+        postEvent(event);
         assertThat(rest.response().statusCode()).isEqualTo(SC_CREATED);
-    }
-
-    /**
-     * Server Unit Test: {@link RestServerTest#addItem()}
-     */
-    @When("we add the item with an empty name")
-    public void weAddItemWithEmptyName()
-    {
-        rest.post("/items", new AddItemRequest());
     }
 
     /**
      * Server Unit Test: {@link RestServerTest#getEvents()}
      */
-    @When("we ask for the event list")
-    public void weAskForTheEventList()
+    @When("we GET the event list")
+    public void getEventList()
     {
         rest.get("/events");
     }
 
-    @When("^we get a (.*) error$")
-    public void weGetError(int expectedStatusCode)
+    @When("^we receive a (.*) error$")
+    public void receiveError(int expectedStatusCode)
     {
         assertThat(rest.response().statusCode()).isEqualTo(expectedStatusCode);
     }
 
-    @Then("we get an empty list")
-    public void weGetEmptyList()
+    @Then("we receive an empty list")
+    public void receiveEmptyList()
     {
         assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
 
@@ -80,8 +72,8 @@ public class CucumberBackendSteps
         assertThat(response.getEvents()).isEqualTo(emptyList());
     }
 
-    @Then("we get this:")
-    public void weGetThis(List<EventDefinition> expectedEvents)
+    @Then("we receive this:")
+    public void receiveThis(List<EventDefinition> expectedEvents)
     {
         assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
 

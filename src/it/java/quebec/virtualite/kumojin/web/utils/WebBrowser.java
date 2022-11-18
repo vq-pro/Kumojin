@@ -102,8 +102,12 @@ public class WebBrowser
         }
     }
 
-    public void set(String id, String value)
+    public WebBrowser set(String id, String value)
     {
-        element(id).sendKeys(value);
+        if (value == null || value.length() == 0)
+            element(id).clear();
+        else
+            element(id).sendKeys(value);
+        return this;
     }
 }

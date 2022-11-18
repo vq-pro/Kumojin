@@ -11,11 +11,9 @@ public class EventDomain
 {
     private final EventRepository repository;
 
-    public void addItem(String name)
+    public void addEvent(EventModel event)
     {
-        repository.save(
-            new EventModel()
-                .setName(name));
+        repository.save(event);
     }
 
     public void clear()

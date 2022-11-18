@@ -28,8 +28,12 @@
 <form>
     <label for="name">Name:</label>
     <input id="name" type="text"/>
+    <br>
+    <label for="desc">Description:</label>
+    <input id="desc" type="text"/>
+    <br>
 
-    <input id="add" type="button" value="Add" onclick="addItem()"/>
+    <input id="add" type="button" value="Add" onclick="addEvent()"/>
 </form>
 
 <br>
@@ -43,7 +47,7 @@
 <script src="js/utils.js"></script>
 <script src="js/app.js"></script>
 <script type="application/javascript">
-    getAndDisplayList();
+    getAndDisplayEventList();
 </script>
 
 </html>

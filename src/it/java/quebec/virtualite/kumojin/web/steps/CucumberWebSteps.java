@@ -13,10 +13,10 @@ public class CucumberWebSteps
 {
     private final SampleAppPageObject sampleAppPageObject;
 
-    @When("^we add \"(.*)\"$")
-    public void weAdd(String item)
+    @When("we add this event:")
+    public void weAddEvent(EventDefinition event)
     {
-        sampleAppPageObject.add(item);
+        sampleAppPageObject.add(event);
     }
 
     @When("we enter the application")

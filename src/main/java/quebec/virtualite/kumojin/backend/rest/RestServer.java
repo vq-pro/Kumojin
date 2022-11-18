@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import quebec.virtualite.kumojin.backend.domain.EventDomain;
+import quebec.virtualite.kumojin.backend.domain.EventModel;
 
 import javax.validation.Valid;
 
@@ -27,8 +28,8 @@ public class RestServer
     @Value("${testing}")
     protected boolean isTesting;
 
-    @PostMapping(value = "/items", consumes = "application/json")
-    public ResponseEntity<Void> addItem(@Valid @RequestBody AddItemRequest request)
+    @PostMapping(value = "/events", consumes = "application/json")
+    public ResponseEntity<Void> addEvent(@Valid @RequestBody AddEventRequest request)
     {
         if (isTesting && isErrorTrigger(request))
             return errorResponse(request);
@@ -36,7 +37,9 @@ public class RestServer
         if (domain.exists(request.getName()))
             return ResponseEntity.status(CONFLICT).build();
 
-        domain.addItem(request.getName());
+        domain.addEvent(new EventModel()
+            .setName(request.getName())
+            .setDescription(request.getDescription()));
         return ResponseEntity.status(CREATED).build();
     }
 
@@ -51,13 +54,13 @@ public class RestServer
                         .setDescription(model.getDescription()))));
     }
 
-    private ResponseEntity<Void> errorResponse(AddItemRequest request)
+    private ResponseEntity<Void> errorResponse(AddEventRequest request)
     {
         int errorStatus = parseInt(request.getName().substring(ERROR_PREFIX.length()));
         return ResponseEntity.status(errorStatus).build();
     }
 
-    private boolean isErrorTrigger(AddItemRequest request)
+    private boolean isErrorTrigger(AddEventRequest request)
     {
         return request.getName().startsWith(ERROR_PREFIX);
     }

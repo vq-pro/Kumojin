@@ -13,6 +13,7 @@ public class SampleAppPageObject extends PageObject
 {
     private static final String ID_ADD_BUTTON = "add";
     private static final String ID_DESCS = "descs";
+    private static final String ID_DESCRIPTION = "desc";
     private static final String ID_ERROR_MESSAGE = "error";
     private static final String ID_NAME = "name";
     private static final String ID_NAMES = "names";
@@ -26,10 +27,12 @@ public class SampleAppPageObject extends PageObject
         stopWebBrowser();
     }
 
-    public void add(String item)
+    public void add(EventDefinition event)
     {
-        browser.set(ID_NAME, item);
-        browser.click(ID_ADD_BUTTON);
+        browser
+            .set(ID_NAME, event.getName())
+            .set(ID_DESCRIPTION, event.getDescription())
+            .click(ID_ADD_BUTTON);
     }
 
     public SampleAppPageObject isViewing()

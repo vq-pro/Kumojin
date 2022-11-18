@@ -1,9 +1,10 @@
 let urlBackend = "http://localhost:8080/events";
 
-function addItem()
+function addEvent()
 {
     const payload = {
-        name: getInputField('name')
+        name: getInputField('name'),
+        description: getInputField('desc')
     }
 
     const options = {
@@ -19,15 +20,15 @@ function addItem()
         {
             if (response.status === 201)
             {
-                getAndDisplayList();
+                getAndDisplayEventList();
 
             } else if (response.status === 400)
             {
-                setError('Invalid item');
+                setError('Invalid event');
 
             } else if (response.status === 409)
             {
-                setError('Duplicate item');
+                setError('Duplicate event');
 
             } else
             {
@@ -81,7 +82,7 @@ function displayHeader()
     document.querySelector('table').appendChild(tr);
 }
 
-function getAndDisplayList()
+function getAndDisplayEventList()
 {
     clearError();
     clearNewEvent();
