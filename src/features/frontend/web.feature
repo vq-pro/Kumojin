@@ -18,13 +18,13 @@ Feature: Web
       | Funeral | Funeral in London. |
     And we enter the application
     When we add this event:
-      | name                  | description                                |
-      | Dinner (or something) | Not sure whether dinner is right for this. |
+      | name                  | description            |
+      | Dinner (or something) | Not sure about dinner. |
     Then we see this event list:
-      | name                  | description                                |
-      | Dinner (or something) | Not sure whether dinner is right for this. |
-      | Funeral               | Funeral in London.                         |
-      | Wedding               | Wedding in Paris.                          |
+      | name                  | description            |
+      | Dinner (or something) | Not sure about dinner. |
+      | Funeral               | Funeral in London.     |
+      | Wedding               | Wedding in Paris.      |
 
   Scenario Outline: Add an event - ERROR - <error message>
     Given these predefined events:

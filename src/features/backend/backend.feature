@@ -6,14 +6,14 @@ Feature: Backend
       | Wedding | Wedding in Paris.  |
       | Funeral | Funeral in London. |
     When we POST this event successfully:
-      | name                  | description                                |
-      | Dinner (or something) | Not sure whether dinner is right for this. |
+      | name                  | description            |
+      | Dinner (or something) | Not sure about dinner. |
     When we GET the event list
     Then we receive this:
-      | name                  | description                                |
-      | Dinner (or something) | Not sure whether dinner is right for this. |
-      | Funeral               | Funeral in London.                         |
-      | Wedding               | Wedding in Paris.                          |
+      | name                  | description            |
+      | Dinner (or something) | Not sure about dinner. |
+      | Funeral               | Funeral in London.     |
+      | Wedding               | Wedding in Paris.      |
 
   Scenario Outline: Add an event - ERROR - <error case>
     Given these predefined events:
