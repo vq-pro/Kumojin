@@ -1,5 +1,6 @@
 package quebec.virtualite.kumojin.backend.rest;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,6 +36,12 @@ public class RestServerTest
 
     @Mock
     private List<String> mockedItems;
+
+    @Before
+    public void init()
+    {
+        server.isTesting = true;
+    }
 
     @Test
     public void addItem()

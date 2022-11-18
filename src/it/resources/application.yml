@@ -1,0 +1,9 @@
+# Database
+spring.jpa:
+  open-in-view: true
+
+# Spring
+spring.main.banner-mode: "off"
+
+# Testing functionality - enabled for testing
+testing: true

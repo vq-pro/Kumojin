@@ -19,8 +19,7 @@ public class CucumberBackendSteps
 {
     private final RestClient rest;
 
-    public CucumberBackendSteps(
-        @Value("${local.server.port}") int serverPort)
+    public CucumberBackendSteps(@Value("${local.server.port}") int serverPort)
     {
         this.rest = new RestClient(serverPort);
     }
