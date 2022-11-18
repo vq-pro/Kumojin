@@ -9,5 +9,13 @@ import java.util.List;
 @Accessors(chain = true)
 public class GetListResponse
 {
-    private List<String> items;
+    private List<Row> events;
+
+    @Data
+    @Accessors(chain = true)
+    public static class Row
+    {
+        private String name;
+        private String description;
+    }
 }

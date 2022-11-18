@@ -3,6 +3,7 @@ package quebec.virtualite.kumojin.web.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
+import quebec.virtualite.kumojin.common.EventDefinition;
 import quebec.virtualite.kumojin.web.pageobject.SampleAppPageObject;
 
 import java.util.List;
@@ -38,8 +39,8 @@ public class CucumberWebSteps
             .validateErrorMessage(expectedMessage);
     }
 
-    @Then("we see this list:")
-    public void weSeeThisList(List<String> expectedList)
+    @Then("we see this event list:")
+    public void weSeeThisEventList(List<EventDefinition> expectedList)
     {
         sampleAppPageObject
             .isViewing()

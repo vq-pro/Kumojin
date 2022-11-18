@@ -8,8 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 import quebec.virtualite.kumojin.backend.domain.EventDomain;
-
-import java.util.List;
+import quebec.virtualite.kumojin.backend.domain.EventModel;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,20 +21,22 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.I_AM_A_TEAPOT;
 import static org.springframework.http.HttpStatus.OK;
+import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestServerTest
 {
+    private static final String DESC_A = "descA";
+    private static final String DESC_B = "descB";
     private static final String NAME = "name";
+    private static final String NAME_A = "nameA";
+    private static final String NAME_B = "nameB";
 
     @InjectMocks
     private RestServer server;
 
     @Mock
     private EventDomain mockedDomain;
-
-    @Mock
-    private List<String> mockedItems;
 
     @Before
     public void init()
@@ -96,40 +97,52 @@ public class RestServerTest
     }
 
     @Test
-    public void getItems()
+    public void getEvents()
     {
         // Given
-        given(mockedDomain.getItems())
-            .willReturn(mockedItems);
+        EventModel modelA = new EventModel()
+            .setName(NAME_A)
+            .setDescription(DESC_A);
+        EventModel modelB = new EventModel()
+            .setName(NAME_B)
+            .setDescription(DESC_B);
+
+        given(mockedDomain.getEvents())
+            .willReturn(list(modelA, modelB));
 
         // When
-        ResponseEntity<GetListResponse> response = server.getItems();
+        ResponseEntity<GetListResponse> response = server.getEvents();
 
         // Then
-        verify(mockedDomain).getItems();
+        verify(mockedDomain).getEvents();
 
         assertThat(response.getStatusCode()).isEqualTo(OK);
         assertThat(response.getBody()).isEqualTo(
-            new GetListResponse()
-                .setItems(mockedItems));
+            new GetListResponse().setEvents(list(
+                new GetListResponse.Row()
+                    .setName(NAME_A)
+                    .setDescription(DESC_A),
+                new GetListResponse.Row()
+                    .setName(NAME_B)
+                    .setDescription(DESC_B))));
     }
 
     @Test
-    public void getItems_whenEmpty_returnsEmptyList()
+    public void getEvents_whenEmpty_returnsEmptyList()
     {
         // Given
-        given(mockedDomain.getItems())
+        given(mockedDomain.getEvents())
             .willReturn(emptyList());
 
         // When
-        ResponseEntity<GetListResponse> response = server.getItems();
+        ResponseEntity<GetListResponse> response = server.getEvents();
 
         // Then
-        verify(mockedDomain).getItems();
+        verify(mockedDomain).getEvents();
 
         assertThat(response.getStatusCode()).isEqualTo(OK);
         assertThat(response.getBody()).isEqualTo(
             new GetListResponse()
-                .setItems(emptyList()));
+                .setEvents(emptyList()));
     }
 }

@@ -7,6 +7,7 @@ import quebec.virtualite.kumojin.backend.rest.AddItemRequest;
 import quebec.virtualite.kumojin.backend.rest.GetListResponse;
 import quebec.virtualite.kumojin.backend.rest.RestServerTest;
 import quebec.virtualite.kumojin.backend.utils.RestClient;
+import quebec.virtualite.kumojin.common.EventDefinition;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import static java.util.Collections.emptyList;
 import static javax.servlet.http.HttpServletResponse.SC_CREATED;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static quebec.virtualite.kumojin.utils.CollectionUtils.transform;
 
 public class CucumberBackendSteps
 {
@@ -55,12 +57,12 @@ public class CucumberBackendSteps
     }
 
     /**
-     * Server Unit Test: {@link RestServerTest#getItems()}
+     * Server Unit Test: {@link RestServerTest#getEvents()}
      */
-    @When("we ask for the list")
-    public void weAskForTheList()
+    @When("we ask for the event list")
+    public void weAskForTheEventList()
     {
-        rest.get("/items");
+        rest.get("/events");
     }
 
     @When("^we get a (.*) error$")
@@ -75,15 +77,18 @@ public class CucumberBackendSteps
         assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
 
         GetListResponse response = rest.response().as(GetListResponse.class);
-        assertThat(response.getItems()).isEqualTo(emptyList());
+        assertThat(response.getEvents()).isEqualTo(emptyList());
     }
 
     @Then("we get this:")
-    public void weGetThis(List<String> expectedItems)
+    public void weGetThis(List<EventDefinition> expectedEvents)
     {
         assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
 
         GetListResponse response = rest.response().as(GetListResponse.class);
-        assertThat(response.getItems()).isEqualTo(expectedItems);
+        assertThat(transform(response.getEvents(), row ->
+            new EventDefinition()
+                .setName(row.getName())
+                .setDescription(row.getDescription()))).isEqualTo(expectedEvents);
     }
 }

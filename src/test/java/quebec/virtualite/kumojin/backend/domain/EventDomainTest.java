@@ -8,11 +8,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventDomainTest
@@ -25,6 +25,12 @@ public class EventDomainTest
 
     @Mock
     private EventRepository mockedEventRepository;
+
+    @Mock
+    private EventModel mockedEventA;
+
+    @Mock
+    private EventModel mockedEventB;
 
     @Test
     public void addItem()
@@ -65,7 +71,7 @@ public class EventDomainTest
     {
         // Given
         given(mockedEventRepository.findByName(NAME_A))
-            .willReturn(new EventModel().setName(NAME_A));
+            .willReturn(mockedEventA);
 
         // When
         boolean result = domain.exists(NAME_A);
@@ -77,50 +83,49 @@ public class EventDomainTest
     }
 
     @Test
-    public void getItems()
+    public void getEvents()
     {
         // Given
-        EventModel event1 = new EventModel().setName(NAME_A);
-        EventModel event2 = new EventModel().setName(NAME_B);
-
-        given(mockedEventRepository.findAll())
-            .willReturn(asList(event1, event2));
+        given(mockedEventRepository.findAllByOrderByNameAsc())
+            .willReturn(list(mockedEventA, mockedEventB));
 
         // When
-        List<String> results = domain.getItems();
+        List<EventModel> results = domain.getEvents();
 
         // Then
-        verify(mockedEventRepository).findAll();
+        verify(mockedEventRepository).findAllByOrderByNameAsc();
 
-        assertThat(results).isEqualTo(asList(NAME_A, NAME_B));
+        assertThat(results).isEqualTo(list(mockedEventA, mockedEventB));
     }
 
     @Test
-    public void getItems_whenEmpty_returnsEmptyList()
+    public void getEvents_whenEmpty_returnsEmptyList()
     {
         // Given
-        given(mockedEventRepository.findAll())
+        given(mockedEventRepository.findAllByOrderByNameAsc())
             .willReturn(emptyList());
 
         // When
-        List<String> results = domain.getItems();
+        List<EventModel> results = domain.getEvents();
 
         // Then
         assertThat(results).isEqualTo(emptyList());
     }
 
     @Test
-    public void setItems()
+    public void setEvents()
     {
         // Given
-        List<String> items = asList(NAME_B, NAME_A);
+        List<EventModel> events = list(
+            mockedEventB,
+            mockedEventA);
 
         // When
-        domain.setItems(items);
+        domain.setEvents(events);
 
         // Then
-        verify(mockedEventRepository).saveAll(asList(
-            new EventModel().setName(NAME_B),
-            new EventModel().setName(NAME_A)));
+        verify(mockedEventRepository).saveAll(list(
+            mockedEventB,
+            mockedEventA));
     }
 }

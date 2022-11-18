@@ -1,4 +1,4 @@
-let urlBackend = "http://localhost:8080/items";
+let urlBackend = "http://localhost:8080/events";
 
 function addItem()
 {
@@ -41,29 +41,50 @@ function clearError()
     hideElement('error')
 }
 
-function clearEvent()
+function clearList()
+{
+    document.querySelector('table').innerHTML = '';
+}
+
+function clearNewEvent()
 {
     setInputField('name', '');
 }
 
-function clearList()
+function displayEvent(event)
 {
-    setElementContent('list', '');
+    var tdName = document.createElement('td');
+    tdName.id = "names";
+    tdName.textContent = event.name;
+    var tdDesc = document.createElement('td');
+    tdDesc.id = "descs";
+    tdDesc.textContent = event.description;
+
+    var tr = document.createElement('tr');
+    tr.appendChild(tdName);
+    tr.appendChild(tdDesc);
+
+    document.querySelector('table').appendChild(tr);
 }
 
-function displayItem(text)
+function displayHeader()
 {
-    var element = document.createElement('li');
-    element.id = "item";
-    element.textContent = text;
+    var thName = document.createElement('th');
+    thName.textContent = "Name";
+    var thDesc = document.createElement('th');
+    thDesc.textContent = "Description"
 
-    document.querySelector('ul').appendChild(element);
+    var tr = document.createElement('tr');
+    tr.appendChild(thName);
+    tr.appendChild(thDesc);
+
+    document.querySelector('table').appendChild(tr);
 }
 
 function getAndDisplayList()
 {
     clearError();
-    clearEvent();
+    clearNewEvent();
     clearList();
 
     fetch(urlBackend)
@@ -73,15 +94,12 @@ function getAndDisplayList()
         })
         .then(data =>
         {
-            for (let item of data.items)
+            displayHeader();
+            for (let event of data.events)
             {
-                displayItem(item);
+                displayEvent(event);
             }
         })
-        .catch((error) =>
-        {
-            alert("Cannot connect to the backend - " + error)
-        });
 }
 
 function setError(error)

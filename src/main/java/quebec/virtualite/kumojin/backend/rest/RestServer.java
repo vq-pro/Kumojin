@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import static java.lang.Integer.parseInt;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
+import static quebec.virtualite.kumojin.utils.CollectionUtils.transform;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,12 +40,15 @@ public class RestServer
         return ResponseEntity.status(CREATED).build();
     }
 
-    @GetMapping(value = "/items", produces = "application/json")
-    public ResponseEntity<GetListResponse> getItems()
+    @GetMapping(value = "/events", produces = "application/json")
+    public ResponseEntity<GetListResponse> getEvents()
     {
         return ResponseEntity.ok(
-            new GetListResponse()
-                .setItems(domain.getItems()));
+            new GetListResponse().setEvents(
+                transform(domain.getEvents(), model ->
+                    new GetListResponse.Row()
+                        .setName(model.getName())
+                        .setDescription(model.getDescription()))));
     }
 
     private ResponseEntity<Void> errorResponse(AddItemRequest request)

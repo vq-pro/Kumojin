@@ -22,4 +22,5 @@ public class EventModel
     private long id;
 
     private String name;
+    private String description;
 }

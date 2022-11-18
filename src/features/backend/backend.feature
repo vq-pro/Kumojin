@@ -23,14 +23,17 @@ Feature: Backend
       | Error 418 generator | error 418 | 418  |
       | Error 500 generator | error 500 | 500  |
 
-  Scenario: Get list of items [when not empty]
-    Given these predefined items:
-      | StarShip |
-      | Dragon   |
-    When we ask for the list
+  @WIP
+  Scenario: Get list of events [when not empty]
+    Given these predefined events:
+      | name     | description                |
+      | StarShip | The new bigger ship.       |
+      | Dragon   | The original crew carrier. |
+    When we ask for the event list
     Then we get this:
-      | Dragon   |
-      | StarShip |
+      | name     | description                |
+      | Dragon   | The original crew carrier. |
+      | StarShip | The new bigger ship.       |
 
   Scenario: Get list of items [when empty]
   Returns an empty list (not 204 or 404).

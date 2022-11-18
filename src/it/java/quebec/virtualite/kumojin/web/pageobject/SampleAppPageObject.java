@@ -1,18 +1,21 @@
 package quebec.virtualite.kumojin.web.pageobject;
 
 import io.cucumber.java.AfterAll;
+import quebec.virtualite.kumojin.common.EventDefinition;
 import quebec.virtualite.kumojin.web.utils.PageObject;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static quebec.virtualite.kumojin.utils.CollectionUtils.transform;
 
 public class SampleAppPageObject extends PageObject
 {
     private static final String ID_ADD_BUTTON = "add";
+    private static final String ID_DESCS = "descs";
     private static final String ID_ERROR_MESSAGE = "error";
-    private static final String ID_ITEM = "item";
     private static final String ID_NAME = "name";
+    private static final String ID_NAMES = "names";
     private static final String ID_TITLE = "title";
 
     private static final String URL = "http://localhost:8080/index.html";
@@ -41,11 +44,9 @@ public class SampleAppPageObject extends PageObject
         browser.go(URL);
     }
 
-    public SampleAppPageObject validateErrorHidden()
+    public void validateErrorHidden()
     {
         poll(() -> validateHidden(ID_ERROR_MESSAGE));
-
-        return this;
     }
 
     public void validateErrorMessage(String expectedMessage)
@@ -53,8 +54,14 @@ public class SampleAppPageObject extends PageObject
         validateDisplayed(ID_ERROR_MESSAGE, expectedMessage);
     }
 
-    public void validateList(List<String> expectedList)
+    public void validateList(List<EventDefinition> expectedList)
     {
-        poll(() -> assertThat(browser.elementsText(ID_ITEM)).isEqualTo(expectedList));
+        poll(() -> {
+            assertThat(browser.elementsText(ID_NAMES)).isEqualTo(
+                transform(expectedList, EventDefinition::getName));
+
+            assertThat(browser.elementsText(ID_DESCS)).isEqualTo(
+                transform(expectedList, EventDefinition::getDescription));
+        });
     }
 }

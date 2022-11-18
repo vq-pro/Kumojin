@@ -1,13 +1,16 @@
 Feature: Web
 
-  Scenario: Display list on entering application
-    Given these predefined items:
-      | StarShip |
-      | Dragon   |
+  @WIP
+  Scenario: Display event list on entering application
+    Given these predefined events:
+      | name     | description                |
+      | StarShip | The new bigger ship.       |
+      | Dragon   | The original crew carrier. |
     When we enter the application
-    Then we see this list:
-      | Dragon   |
-      | StarShip |
+    Then we see this event list:
+      | name     | description                |
+      | Dragon   | The original crew carrier. |
+      | StarShip | The new bigger ship.       |
 
   Scenario: Add an item
     Given these predefined items:
