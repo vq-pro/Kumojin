@@ -1,3 +1,8 @@
+function clearInputField(id)
+{
+    setInputField(id, '');
+}
+
 function element(id)
 {
     return document.querySelector('#' + id);

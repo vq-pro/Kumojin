@@ -4,7 +4,9 @@ function addEvent()
 {
     const payload = {
         name: getInputField('name'),
-        description: getInputField('desc')
+        description: getInputField('desc'),
+        timezone: getInputField('timezone'),
+        start: getInputField('start')
     }
 
     const options = {
@@ -49,7 +51,10 @@ function clearList()
 
 function clearNewEvent()
 {
-    setInputField('name', '');
+    clearInputField('name');
+    clearInputField('desc');
+    clearInputField('timezone');
+    clearInputField('start');
 }
 
 function displayEvent(event)

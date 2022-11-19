@@ -71,6 +71,13 @@ public abstract class PageObject
         validateElementText(idElement, expectedText);
     }
 
+    protected void validateElementAttribute(String idElement, String attribute,
+        String expectedText)
+    {
+        assertThat("Bad attribute for '" + idElement + "'/" + attribute,
+            browser.elementAttribute(idElement, attribute), is(expectedText));
+    }
+
     protected void validateElementText(String idElement, String expectedText)
     {
         assertThat("Bad text for '" + idElement + "'",

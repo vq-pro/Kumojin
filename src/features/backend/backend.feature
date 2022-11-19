@@ -1,19 +1,20 @@
 Feature: Backend
 
+  @WIP
   Scenario: Add an event
     Given these predefined events:
-      | name    | description        |
-      | Wedding | Wedding in Paris.  |
-      | Funeral | Funeral in London. |
+      | name    | description          | timezone | start            |
+      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 |
+      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 |
     When we POST this event successfully:
-      | name                  | description            |
-      | Dinner (or something) | Not sure about dinner. |
+      | name                  | description            | timezone | start            |
+      | Dinner (or something) | Not sure about dinner. | +00:00   | 2022-12-26 14:30 |
     When we GET the event list
     Then we receive this:
-      | name                  | description            |
-      | Dinner (or something) | Not sure about dinner. |
-      | Funeral               | Funeral in London.     |
-      | Wedding               | Wedding in Paris.      |
+      | name                  | description            | start                   |
+      | Dinner (or something) | Not sure about dinner. | 2022-12-26 14:30 Z      |
+      | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 |
+      | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 |
 
   Scenario Outline: Add an event - ERROR - <error case>
     Given these predefined events:

@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 @Slf4j
 @SuppressWarnings("unused")
@@ -100,6 +102,25 @@ public class WebBrowser
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public WebBrowser select(String id, String value)
+    {
+        Select select = new Select(element(id));
+        List<WebElement> options = select.getOptions();
+
+        for (int i = 0; i < options.size(); i++)
+        {
+            WebElement option = options.get(i);
+            if (option.getText().equals(value))
+            {
+                select.selectByIndex(i);
+                return this;
+            }
+        }
+
+        fail("Cannot find option " + value + " for SELECT " + id);
+        return this;
     }
 
     public WebBrowser set(String id, String value)

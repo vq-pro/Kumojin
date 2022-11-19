@@ -19,8 +19,10 @@ public class SampleAppPageObject extends PageObject
     private static final String ID_ERROR_MESSAGE = "error";
     private static final String ID_NAME = "name";
     private static final String ID_NAMES = "names";
+    private static final String ID_START = "start";
     private static final String ID_STARTS = "starts";
     private static final String ID_TABLE_HEADER = "header";
+    private static final String ID_TIMEZONE = "timezone";
     private static final String ID_TITLE = "title";
 
     private static final List<String> TABLE_HEADER = list("Name", "Description", "Start");
@@ -38,14 +40,20 @@ public class SampleAppPageObject extends PageObject
         browser
             .set(ID_NAME, event.getName())
             .set(ID_DESCRIPTION, event.getDescription())
+            .select(ID_TIMEZONE, event.getTimezone())
+            .set(ID_START, event.getStart())
             .click(ID_ADD_BUTTON);
         return this;
     }
 
     public void addFormIsCleared()
     {
-        validateElementText(ID_NAME, "");
-        validateElementText(ID_DESCRIPTION, "");
+        poll(() -> {
+            validateElementAttribute(ID_NAME, "value", "");
+            validateElementAttribute(ID_DESCRIPTION, "value", "");
+            validateElementAttribute(ID_TIMEZONE, "value", "");
+            validateElementAttribute(ID_START, "value", "");
+        });
     }
 
     public SampleAppPageObject isViewing()

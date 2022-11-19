@@ -17,6 +17,7 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static quebec.virtualite.kumojin.utils.CollectionUtils.transform;
 import static quebec.virtualite.kumojin.utils.DateTimeUtils.formatTimestamp;
+import static quebec.virtualite.kumojin.utils.DateTimeUtils.parseTimestamp;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,7 +41,10 @@ public class RestServer
 
         domain.addEvent(new EventModel()
             .setName(request.getName())
-            .setDescription(request.getDescription()));
+            .setDescription(request.getDescription())
+            .setTimezone(request.getTimezone())
+            .setStart(parseTimestamp(request.getStart(), request.getTimezone())));
+
         return ResponseEntity.status(CREATED).build();
     }
 

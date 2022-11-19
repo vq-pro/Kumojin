@@ -39,7 +39,9 @@ public class CucumberBackendSteps
         rest.post("/events",
             new AddEventRequest()
                 .setName(event.getName())
-                .setDescription(event.getDescription()));
+                .setDescription(event.getDescription())
+                .setTimezone(event.getTimezone())
+                .setStart(event.getStart()));
     }
 
     /**

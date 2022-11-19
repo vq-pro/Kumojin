@@ -32,6 +32,18 @@
     <label for="desc">Description:</label>
     <input id="desc" type="text"/>
     <br>
+    <label for="timezone">Timezone:</label>
+    <select id="timezone">
+        <option value="">&lt;Please select&gt;</option>
+        <option value="+03:00">Istanbul</option>
+        <option value="Z">London</option>
+        <option value="-05:00">Montreal</option>
+        <option value="+01:00">Paris</option>
+    </select>
+    <br>
+    <label for="start">Start:</label>
+    <input id="start" type="text"/>
+    <br>
 
     <input id="add" type="button" value="Add" onclick="addEvent()"/>
 </form>
@@ -45,7 +57,7 @@
 </body>
 
 <script src="js/utils.js"></script>
-<script src="js/app.js"></script>
+<script src="js/events.js"></script>
 <script type="application/javascript">
     getAndDisplayEventList();
 </script>

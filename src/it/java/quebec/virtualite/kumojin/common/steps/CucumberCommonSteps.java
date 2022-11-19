@@ -22,8 +22,8 @@ import static quebec.virtualite.kumojin.utils.DateTimeUtils.parseTimestamp;
 @RequiredArgsConstructor
 public class CucumberCommonSteps
 {
+    private static final List<String> HEADER = list("name", "description", "start");
     private static final List<String> HEADER_WITH_TIMEZONE = list("name", "description", "timezone", "start");
-    private static final List<String> HEADER_WITHOUT_TIMEZONE = list("name", "description", "start");
 
     private final EventDomain domain;
 
@@ -52,8 +52,8 @@ public class CucumberCommonSteps
     public List<EventTableRow> readEventsFromTable(DataTable table)
     {
         assertTrue(
-            HEADER_WITH_TIMEZONE.equals(table.row(0)) ||
-            HEADER_WITHOUT_TIMEZONE.equals(table.row(0)));
+            HEADER.equals(table.row(0)) ||
+            HEADER_WITH_TIMEZONE.equals(table.row(0)));
 
         return transform(table.entries(),
             row -> new EventTableRow()

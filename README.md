@@ -27,3 +27,8 @@ Located in .run directory.
 * For persistence, integrated the H2 memory database, also for simplicity. This way, it will run on any local
   configuration, without the need for a more complex Docker container (or the like). Since the app is JPA, it would be a
   cinch to convert it to use a PostgreSL instance, just a matter of datasource definition.
+
+* Start and end event times will be kept in the database as a "TIMESTAMP". The timezone, in format "-05:00" will be
+  stored in the DB. When timestamps are received by the backend REST server, it will convert timestamps to the server's
+  local timezone. When the REST server give these back to the frontend (through the GET list method), they will be
+  converted back into the actual timezones.

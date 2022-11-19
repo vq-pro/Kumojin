@@ -34,8 +34,10 @@ public class RestServerTest
     private static final String NAME = "name";
     private static final String NAME_A = "nameA";
     private static final String NAME_B = "nameB";
+    private static final String START = "2022-12-26 14:30";
     private static final String START_A = "2022-12-25 12:00";
     private static final String START_B = "2022-12-18 17:00";
+    private static final String TIMEZONE = "+00:00";
     private static final String TIMEZONE_A = "-05:00";
     private static final String TIMEZONE_B = "+03:00";
 
@@ -57,7 +59,9 @@ public class RestServerTest
         // Given
         AddEventRequest request = new AddEventRequest()
             .setName(NAME)
-            .setDescription(DESC);
+            .setDescription(DESC)
+            .setTimezone(TIMEZONE)
+            .setStart(START);
 
         // When
         ResponseEntity<Void> response = server.addEvent(request);
@@ -66,7 +70,9 @@ public class RestServerTest
         verify(mockedDomain).exists(NAME);
         verify(mockedDomain).addEvent(new EventModel()
             .setName(NAME)
-            .setDescription(DESC));
+            .setDescription(DESC)
+            .setTimezone(TIMEZONE)
+            .setStart(parseTimestamp(START, TIMEZONE)));
 
         assertThat(response.getStatusCode(), equalTo(CREATED));
     }
