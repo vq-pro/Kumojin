@@ -29,27 +29,27 @@ Feature: Web
       | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 | 2022-12-18 20:00 +03:00 |
       | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 | 2022-12-27 23:00 +01:00 |
 
-  @Ignore
   Scenario Outline: Add an event - ERROR - <error message> [name=<name>]
     Given these predefined events:
-      | name    | description          | timezone | start            |
-      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 |
-      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 |
+      | name    | description          | timezone | start            | end              |
+      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 | 2022-12-18 20:00 |
     And we enter the application
     When we add this event:
-      | name   | description   | timezone   | start   |
-      | <name> | <description> | <timezone> | <start> |
+      | name   | description   | timezone   | start   | end   |
+      | <name> | <description> | <timezone> | <start> | <end> |
     Then the add form is not cleared
     And we see this error message: "<error message>"
     Examples:
-      | name           | description          | timezone | start            | error message               |
-      | Funeral        | Funeral in Istanbul. | Istanbul | 2022-12-18 17:00 | Duplicate event             |
-      |                | No name              | Paris    | 2022-12-25 12:00 | Invalid event               |
-      | No description |                      | Paris    | 2022-12-25 12:00 | Invalid event               |
-      | No timezone    | Funeral in Istanbul. |          | 2022-12-25 12:00 | Invalid event               |
-      | No start       | Funeral in Istanbul. | Paris    |                  | Invalid event               |
-      | error 204      | -                    | Paris    | -                | Internal server error (204) |
-      | error 500      | -                    | Paris    | -                | Internal server error (500) |
+      | name           | description          | timezone | start            | end              | error message               |
+      | Funeral        | Funeral in Istanbul. | Istanbul | 2022-12-18 17:00 | 2022-12-18 20:00 | Duplicate event             |
+      |                | No name              | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 | Invalid event               |
+      | No description |                      | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 | Invalid event               |
+      | No timezone    | Funeral in Istanbul. |          | 2022-12-25 12:00 | 2022-12-27 23:00 | Invalid event               |
+      | No start       | Funeral in Istanbul. | Paris    |                  | 2022-12-27 23:00 | Invalid event               |
+      | No end         | Funeral in Istanbul. | Paris    | 2022-12-25 12:00 |                  | Invalid event               |
+      | error 204      | -                    | Paris    | -                | -                | Internal server error (204) |
+      | error 500      | -                    | Paris    | -                | -                | Internal server error (500) |
 
   @Ignore
   Scenario: Add an event - ERROR - Error disappears after successful add
