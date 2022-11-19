@@ -50,20 +50,16 @@ Feature: Web
       | error 204      | -                    | Paris    | -                | Internal server error (204) |
       | error 500      | -                    | Paris    | -                | Internal server error (500) |
 
-  @Ignore
   Scenario: Add an event - ERROR - Error disappears after successful add
     Given we enter the application
     And we add this event:
-      | name | description |
-      |      |             |
+      | name   | description | timezone | start            |
+      | Dinner |             | Paris    | 2022-12-26 14:30 |
     And we see this error message: "Invalid event"
     When we add this event:
-      | name | description |
-      |      |             |
-    When we add this event:
-      | name   | description        |
-      | Dinner | Dinner, all right! |
+      | name   | description        | timezone | start            |
+      | Dinner | Dinner, all right! | Paris    | 2022-12-26 14:30 |
     Then we don't see an error message
     Then we see this event list:
-      | name   | description        |
-      | Dinner | Dinner, all right! |
+      | name   | description        | start                   |
+      | Dinner | Dinner, all right! | 2022-12-26 14:30 +01:00 |

@@ -132,10 +132,11 @@ public class WebBrowser
 
     public WebBrowser set(String id, String value)
     {
-        if (value == null || value.length() == 0)
-            element(id).clear();
-        else
+        element(id).clear();
+        if (!isEmpty(value))
+        {
             element(id).sendKeys(value);
+        }
         return this;
     }
 }
