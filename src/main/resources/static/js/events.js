@@ -2,14 +2,14 @@ let urlBackend = "http://localhost:8080/events";
 
 function addEvent()
 {
-    const payload = {
+    let payload = {
         name: getInputField('name'),
         description: getInputField('desc'),
         timezone: getInputField('timezone'),
         start: getInputField('start')
     }
 
-    const options = {
+    let options = {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
@@ -59,41 +59,20 @@ function clearNewEvent()
 
 function displayEvent(event)
 {
-    var tdName = document.createElement('td');
-    tdName.id = "names";
-    tdName.textContent = event.name;
-    var tdDesc = document.createElement('td');
-    tdDesc.id = "descs";
-    tdDesc.textContent = event.description;
-    var tdStarts = document.createElement('td');
-    tdStarts.id = "starts";
-    tdStarts.textContent = event.start;
-
-    var tr = document.createElement('tr');
-    tr.appendChild(tdName);
-    tr.appendChild(tdDesc);
-    tr.appendChild(tdStarts);
+    let tr = document.createElement('tr');
+    tr.appendChild(newElement('td', 'names', event.name));
+    tr.appendChild(newElement('td', 'descs', event.description));
+    tr.appendChild(newElement('td', 'starts', event.start));
 
     document.querySelector('table').appendChild(tr);
 }
 
-// FIXME-1 Define newElement() method
 function displayHeader()
 {
-    var thName = document.createElement('th');
-    thName.id = "header"
-    thName.textContent = "Name";
-    var thDesc = document.createElement('th');
-    thDesc.id = "header"
-    thDesc.textContent = "Description"
-    var thStart = document.createElement('th');
-    thStart.id = "header"
-    thStart.textContent = "Start"
-
-    var tr = document.createElement('tr');
-    tr.appendChild(thName);
-    tr.appendChild(thDesc);
-    tr.appendChild(thStart);
+    let tr = document.createElement('tr');
+    tr.appendChild(newElement('th', 'header', 'Name'));
+    tr.appendChild(newElement('th', 'header', 'Description'));
+    tr.appendChild(newElement('th', 'header', 'Start'));
 
     document.querySelector('table').appendChild(tr);
 }
