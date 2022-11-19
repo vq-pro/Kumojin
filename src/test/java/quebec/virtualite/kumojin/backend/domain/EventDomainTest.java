@@ -9,7 +9,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
@@ -60,7 +61,7 @@ public class EventDomainTest
         // Then
         verify(mockedEventRepository).findByName(NAME);
 
-        assertThat(result).isFalse();
+        assertThat(result, equalTo(false));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class EventDomainTest
         // Then
         verify(mockedEventRepository).findByName(NAME);
 
-        assertThat(result).isTrue();
+        assertThat(result, equalTo(true));
     }
 
     @Test
@@ -92,7 +93,7 @@ public class EventDomainTest
         // Then
         verify(mockedEventRepository).findAllByOrderByNameAsc();
 
-        assertThat(results).isEqualTo(list(mockedEventA, mockedEventB));
+        assertThat(results, equalTo(list(mockedEventA, mockedEventB)));
     }
 
     @Test
@@ -106,7 +107,7 @@ public class EventDomainTest
         List<EventModel> results = domain.getEvents();
 
         // Then
-        assertThat(results).isEqualTo(emptyList());
+        assertThat(results, equalTo(emptyList()));
     }
 
     @Test

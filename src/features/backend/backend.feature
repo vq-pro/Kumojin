@@ -32,16 +32,19 @@ Feature: Backend
       | Error 418 generator | error 418 | -                 | 418  |
       | Error 500 generator | error 500 | -                 | 500  |
 
+  @WIP
   Scenario: Get list of events [when not empty]
     Given these predefined events:
-      | name    | description        |
-      | Wedding | Wedding in Paris.  |
-      | Funeral | Funeral in London. |
+      | name     | description                | timezone | start            |
+      | Wedding  | Wedding in Paris.          | +01:00   | 2022-12-25 12:00 |
+      | Aventure | Jazz Festival in Montreal. | -05:00   | 2023-06-30 18:00 |
+      | Funeral  | Funeral in Istanbul.       | +03:00   | 2022-12-18 17:00 |
     When we GET the event list
     Then we receive this:
-      | name    | description        |
-      | Funeral | Funeral in London. |
-      | Wedding | Wedding in Paris.  |
+      | name     | description                | start                   |
+      | Aventure | Jazz Festival in Montreal. | 2023-06-30 18:00 -05:00 |
+      | Funeral  | Funeral in Istanbul.       | 2022-12-18 17:00 +03:00 |
+      | Wedding  | Wedding in Paris.          | 2022-12-25 12:00 +01:00 |
 
   Scenario: Get list of events [when empty]
   Returns an empty list (not 204 or 404).

@@ -1,15 +1,18 @@
 Feature: Web
 
+  @WIP
   Scenario: Display event list on entering application
     Given these predefined events:
-      | name    | description        |
-      | Wedding | Wedding in Paris.  |
-      | Funeral | Funeral in London. |
+      | name     | description                | timezone | start            |
+      | Wedding  | Wedding in Paris.          | +01:00   | 2022-12-25 12:00 |
+      | Aventure | Jazz Festival in Montreal. | -05:00   | 2023-06-30 18:00 |
+      | Funeral  | Funeral in Istanbul.       | +03:00   | 2022-12-18 17:00 |
     When we enter the application
     Then we see this event list:
-      | name    | description        |
-      | Funeral | Funeral in London. |
-      | Wedding | Wedding in Paris.  |
+      | name     | description                | start                   |
+      | Aventure | Jazz Festival in Montreal. | 2023-06-30 18:00 -05:00 |
+      | Funeral  | Funeral in Istanbul.       | 2022-12-18 17:00 +03:00 |
+      | Wedding  | Wedding in Paris.          | 2022-12-25 12:00 +01:00 |
 
   Scenario: Add an event
     Given these predefined events:

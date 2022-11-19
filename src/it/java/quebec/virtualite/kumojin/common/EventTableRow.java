@@ -5,8 +5,10 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class EventDefinition
+public class EventTableRow
 {
     private String name;
     private String description;
+    private String timezone;
+    private String start;
 }

@@ -3,7 +3,7 @@ package quebec.virtualite.kumojin.web.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
-import quebec.virtualite.kumojin.common.EventDefinition;
+import quebec.virtualite.kumojin.common.EventTableRow;
 import quebec.virtualite.kumojin.web.pageobject.SampleAppPageObject;
 
 import java.util.List;
@@ -14,9 +14,11 @@ public class CucumberWebSteps
     private final SampleAppPageObject sampleAppPageObject;
 
     @When("we add this event:")
-    public void weAddEvent(EventDefinition event)
+    public void weAddEvent(EventTableRow event)
     {
-        sampleAppPageObject.add(event);
+        sampleAppPageObject
+            .add(event)
+            .addFormIsCleared();
     }
 
     @When("we enter the application")
@@ -40,7 +42,7 @@ public class CucumberWebSteps
     }
 
     @Then("we see this event list:")
-    public void weSeeThisEventList(List<EventDefinition> expectedList)
+    public void weSeeThisEventList(List<EventTableRow> expectedList)
     {
         sampleAppPageObject
             .isViewing()

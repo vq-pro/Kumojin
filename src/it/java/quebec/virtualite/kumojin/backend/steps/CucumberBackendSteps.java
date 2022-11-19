@@ -1,5 +1,6 @@
 package quebec.virtualite.kumojin.backend.steps;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,18 +8,21 @@ import quebec.virtualite.kumojin.backend.rest.AddEventRequest;
 import quebec.virtualite.kumojin.backend.rest.GetListResponse;
 import quebec.virtualite.kumojin.backend.rest.RestServerTest;
 import quebec.virtualite.kumojin.backend.utils.RestClient;
-import quebec.virtualite.kumojin.common.EventDefinition;
+import quebec.virtualite.kumojin.common.EventTableRow;
 
 import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static javax.servlet.http.HttpServletResponse.SC_CREATED;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static org.assertj.core.api.Assertions.assertThat;
-import static quebec.virtualite.kumojin.utils.CollectionUtils.transform;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static quebec.virtualite.kumojin.common.steps.CucumberCommonSteps.tableFrom;
+import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
 
 public class CucumberBackendSteps
 {
+    private static final List<String> EVENT_LIST_HEADER = list("name", "description", "start");
     private final RestClient rest;
 
     public CucumberBackendSteps(@Value("${local.server.port}") int serverPort)
@@ -30,7 +34,7 @@ public class CucumberBackendSteps
      * Server Unit Test: {@link RestServerTest#addEvent()}
      */
     @When("we POST this event:")
-    public void postEvent(EventDefinition event)
+    public void postEvent(EventTableRow event)
     {
         rest.post("/events",
             new AddEventRequest()
@@ -42,10 +46,10 @@ public class CucumberBackendSteps
      * Server Unit Test: {@link RestServerTest#addEvent()}
      */
     @When("we POST this event successfully:")
-    public void postEventSuccessfully(EventDefinition event)
+    public void postEventSuccessfully(EventTableRow event)
     {
         postEvent(event);
-        assertThat(rest.response().statusCode()).isEqualTo(SC_CREATED);
+        assertThat(rest.response().statusCode(), equalTo(SC_CREATED));
     }
 
     /**
@@ -60,27 +64,26 @@ public class CucumberBackendSteps
     @When("^we receive a (.*) error$")
     public void receiveError(int expectedStatusCode)
     {
-        assertThat(rest.response().statusCode()).isEqualTo(expectedStatusCode);
+        assertThat(rest.response().statusCode(), equalTo(expectedStatusCode));
     }
 
     @Then("we receive an empty list")
     public void receiveEmptyList()
     {
-        assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
+        assertThat(rest.response().statusCode(), equalTo(SC_OK));
 
         GetListResponse response = rest.response().as(GetListResponse.class);
-        assertThat(response.getEvents()).isEqualTo(emptyList());
+        assertThat(response.getEvents(), equalTo(emptyList()));
     }
 
     @Then("we receive this:")
-    public void receiveThis(List<EventDefinition> expectedEvents)
+    public void receiveThis(DataTable expectedEvents)
     {
-        assertThat(rest.response().statusCode()).isEqualTo(SC_OK);
+        assertThat(rest.response().statusCode(), equalTo(SC_OK));
 
         GetListResponse response = rest.response().as(GetListResponse.class);
-        assertThat(transform(response.getEvents(), row ->
-            new EventDefinition()
-                .setName(row.getName())
-                .setDescription(row.getDescription()))).isEqualTo(expectedEvents);
+        expectedEvents.diff(tableFrom(
+            EVENT_LIST_HEADER, response.getEvents(),
+            row -> list(row.getName(), row.getDescription(), row.getStart())));
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "event")
@@ -23,4 +24,6 @@ public class EventModel
 
     private String name;
     private String description;
+    private String timezone;
+    private Timestamp start;
 }
