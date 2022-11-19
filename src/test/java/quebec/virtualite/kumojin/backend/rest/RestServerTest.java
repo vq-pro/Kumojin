@@ -31,6 +31,8 @@ public class RestServerTest
     private static final String DESC = "desc";
     private static final String DESC_A = "descA";
     private static final String DESC_B = "descB";
+    private static final String END_A = "2022-12-26 09:00";
+    private static final String END_B = "2022-12-18 18:00";
     private static final String NAME = "name";
     private static final String NAME_A = "nameA";
     private static final String NAME_B = "nameB";
@@ -72,7 +74,7 @@ public class RestServerTest
             .setName(NAME)
             .setDescription(DESC)
             .setTimezone(TIMEZONE)
-            .setStart(parseTimestamp(START, TIMEZONE)));
+            .setEventStart(parseTimestamp(START, TIMEZONE)));
 
         assertThat(response.getStatusCode(), equalTo(CREATED));
     }
@@ -121,12 +123,14 @@ public class RestServerTest
             .setName(NAME_A)
             .setDescription(DESC_A)
             .setTimezone(TIMEZONE_A)
-            .setStart(parseTimestamp(START_A, TIMEZONE_A));
+            .setEventStart(parseTimestamp(START_A, TIMEZONE_A))
+            .setEventEnd(parseTimestamp(END_A, TIMEZONE_A));
         EventModel modelB = new EventModel()
             .setName(NAME_B)
             .setDescription(DESC_B)
             .setTimezone(TIMEZONE_B)
-            .setStart(parseTimestamp(START_B, TIMEZONE_B));
+            .setEventStart(parseTimestamp(START_B, TIMEZONE_B))
+            .setEventEnd(parseTimestamp(END_B, TIMEZONE_B));
 
         given(mockedDomain.getEvents())
             .willReturn(list(modelA, modelB));
@@ -143,11 +147,13 @@ public class RestServerTest
                 new GetListResponse.Row()
                     .setName(NAME_A)
                     .setDescription(DESC_A)
-                    .setStart(START_A + " " + TIMEZONE_A),
+                    .setStart(START_A + " " + TIMEZONE_A)
+                    .setEnd(END_A + " " + TIMEZONE_A),
                 new GetListResponse.Row()
                     .setName(NAME_B)
                     .setDescription(DESC_B)
-                    .setStart(START_B + " " + TIMEZONE_B)))));
+                    .setStart(START_B + " " + TIMEZONE_B)
+                    .setEnd(END_B + " " + TIMEZONE_B)))));
     }
 
     @Test

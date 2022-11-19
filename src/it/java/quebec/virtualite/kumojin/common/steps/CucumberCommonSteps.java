@@ -22,8 +22,8 @@ import static quebec.virtualite.kumojin.utils.DateTimeUtils.parseTimestamp;
 @RequiredArgsConstructor
 public class CucumberCommonSteps
 {
-    private static final List<String> HEADER = list("name", "description", "start");
-    private static final List<String> HEADER_WITH_TIMEZONE = list("name", "description", "timezone", "start");
+    private static final List<String> HEADER = list("name", "description", "start", "end");
+    private static final List<String> HEADER_WITH_TIMEZONE = list("name", "description", "timezone", "start", "end");
 
     private final EventDomain domain;
 
@@ -45,7 +45,8 @@ public class CucumberCommonSteps
                     .setName(def.getName())
                     .setDescription(def.getDescription())
                     .setTimezone(def.getTimezone())
-                    .setStart(parseTimestamp(def.getStart(), def.getTimezone()))));
+                    .setEventStart(parseTimestamp(def.getStart(), def.getTimezone()))
+                    .setEventEnd(parseTimestamp(def.getEnd(), def.getTimezone()))));
     }
 
     @DataTableType
@@ -60,7 +61,8 @@ public class CucumberCommonSteps
                 .setName(row.get("name"))
                 .setDescription(row.get("description"))
                 .setTimezone(row.get("timezone"))
-                .setStart(row.get("start")));
+                .setStart(row.get("start"))
+                .setEnd(row.get("end")));
     }
 
     public static <T> DataTable tableFrom(List<String> headerRow, List<T> rows,

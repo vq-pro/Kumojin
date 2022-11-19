@@ -11,4 +11,5 @@ public class EventTableRow
     private String description;
     private String timezone;
     private String start;
+    private String end;
 }

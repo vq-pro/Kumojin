@@ -63,6 +63,7 @@ function displayEvent(event)
     tr.appendChild(newElement('td', 'names', event.name));
     tr.appendChild(newElement('td', 'descs', event.description));
     tr.appendChild(newElement('td', 'starts', event.start));
+    tr.appendChild(newElement('td', 'ends', event.end));
 
     document.querySelector('table').appendChild(tr);
 }
@@ -73,6 +74,7 @@ function displayHeader()
     tr.appendChild(newElement('th', 'header', 'Name'));
     tr.appendChild(newElement('th', 'header', 'Description'));
     tr.appendChild(newElement('th', 'header', 'Start'));
+    tr.appendChild(newElement('th', 'header', 'End'));
 
     document.querySelector('table').appendChild(tr);
 }

@@ -25,5 +25,6 @@ public class EventModel
     private String name;
     private String description;
     private String timezone;
-    private Timestamp start;
+    private Timestamp eventStart;
+    private Timestamp eventEnd;
 }

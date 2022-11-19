@@ -43,7 +43,7 @@ public class RestServer
             .setName(request.getName())
             .setDescription(request.getDescription())
             .setTimezone(request.getTimezone())
-            .setStart(parseTimestamp(request.getStart(), request.getTimezone())));
+            .setEventStart(parseTimestamp(request.getStart(), request.getTimezone())));
 
         return ResponseEntity.status(CREATED).build();
     }
@@ -57,7 +57,8 @@ public class RestServer
                     new GetListResponse.Row()
                         .setName(model.getName())
                         .setDescription(model.getDescription())
-                        .setStart(formatTimestamp(model.getStart(), model.getTimezone())))));
+                        .setStart(formatTimestamp(model.getEventStart(), model.getTimezone()))
+                        .setEnd(formatTimestamp(model.getEventEnd(), model.getTimezone())))));
     }
 
     private ResponseEntity<Void> errorResponse(AddEventRequest request)

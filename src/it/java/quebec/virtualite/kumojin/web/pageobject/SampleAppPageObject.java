@@ -16,6 +16,7 @@ public class SampleAppPageObject extends PageObject
     private static final String ID_ADD_BUTTON = "add";
     private static final String ID_DESCS = "descs";
     private static final String ID_DESCRIPTION = "desc";
+    private static final String ID_ENDS = "ends";
     private static final String ID_ERROR_MESSAGE = "error";
     private static final String ID_NAME = "name";
     private static final String ID_NAMES = "names";
@@ -25,7 +26,7 @@ public class SampleAppPageObject extends PageObject
     private static final String ID_TIMEZONE = "timezone";
     private static final String ID_TITLE = "title";
 
-    private static final List<String> TABLE_HEADER = list("Name", "Description", "Start");
+    private static final List<String> TABLE_HEADER = list("Name", "Description", "Start", "End");
 
     private static final String URL = "http://localhost:8080/index.html";
 
@@ -102,6 +103,9 @@ public class SampleAppPageObject extends PageObject
 
             assertThat(browser.elementsText(ID_STARTS), equalTo(
                 transform(expectedList, EventTableRow::getStart)));
+
+            assertThat(browser.elementsText(ID_ENDS), equalTo(
+                transform(expectedList, EventTableRow::getEnd)));
         });
     }
 }

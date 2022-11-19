@@ -24,9 +24,15 @@ Located in .run directory.
   respects the present specifications. So straight
   JavaScript was used.
 
-* Thus I decided to keep the frontend simplest to focus on the tests and the backend code. I chose not to implement some
+* Keeping things simple on the frontend allowed me to focus on the tests and the backend code. I chose not to implement
+  some
   cosmetic niceties, like the Add button to disable/enable itself based on form validation (the backend validates
   instead), or a label that says something like "No events" when the list is empty.
+
+* And also took a few shortcuts with the date display and input. As of now, it's the backend that supplies the date in
+  string representation. This is not ideal: normally the frontend would receive it in plain ISO format, and then display
+  it according to a given format (locale-specific). And there could be a simpler interface to select the date on the add
+  form (i.e. a popup calendar). But again, I decided to take a few shortcuts to avoid working on this for too long.
 
 * For persistence, integrated the H2 memory database, also for simplicity. This way, it will run on any local
   configuration, without the need for a more complex Docker container (or the like). Since the app is JPA, it would be a

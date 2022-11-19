@@ -22,7 +22,8 @@ import static quebec.virtualite.kumojin.utils.CollectionUtils.list;
 
 public class CucumberBackendSteps
 {
-    private static final List<String> EVENT_LIST_HEADER = list("name", "description", "start");
+    private static final List<String> EVENT_LIST_HEADER = list("name", "description", "start", "end");
+
     private final RestClient rest;
 
     public CucumberBackendSteps(@Value("${local.server.port}") int serverPort)
@@ -86,6 +87,6 @@ public class CucumberBackendSteps
         GetListResponse response = rest.response().as(GetListResponse.class);
         expectedEvents.diff(tableFrom(
             EVENT_LIST_HEADER, response.getEvents(),
-            row -> list(row.getName(), row.getDescription(), row.getStart())));
+            row -> list(row.getName(), row.getDescription(), row.getStart(), row.getEnd())));
     }
 }
