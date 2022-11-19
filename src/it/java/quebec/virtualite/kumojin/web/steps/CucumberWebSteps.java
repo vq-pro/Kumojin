@@ -31,6 +31,12 @@ public class CucumberWebSteps
         sampleAppPageObject.validateAddFormIsCleared();
     }
 
+    @Then("the add form is not cleared")
+    public void addFormIsNotCleared()
+    {
+        sampleAppPageObject.validateAddFormIsNotCleared();
+    }
+
     @Then("we don't see an error message")
     public void weDontSeeErrorMessage()
     {

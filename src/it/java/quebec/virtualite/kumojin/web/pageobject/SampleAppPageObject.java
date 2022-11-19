@@ -67,6 +67,17 @@ public class SampleAppPageObject extends PageObject
         });
     }
 
+    public void validateAddFormIsNotCleared()
+    {
+        poll(() -> {
+            assertThat(browser.elementAttribute(ID_NAME, "value").equals("") &&
+                       browser.elementAttribute(ID_DESCRIPTION, "value").equals("") &&
+                       browser.elementAttribute(ID_TIMEZONE, "value").equals("") &&
+                       browser.elementAttribute(ID_START, "value").equals(""),
+                equalTo(false));
+        });
+    }
+
     public void validateErrorHidden()
     {
         poll(() -> validateHidden(ID_ERROR_MESSAGE));

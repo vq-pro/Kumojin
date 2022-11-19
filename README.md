@@ -24,6 +24,10 @@ Located in .run directory.
   respects the present specifications. So straight
   JavaScript was used.
 
+* Thus I decided to keep the frontend simplest to focus on the tests and the backend code. I chose not to implement some
+  cosmetic niceties, like the Add button to disable/enable itself based on form validation (the backend validates
+  instead), or a label that says something like "No events" when the list is empty.
+
 * For persistence, integrated the H2 memory database, also for simplicity. This way, it will run on any local
   configuration, without the need for a more complex Docker container (or the like). Since the app is JPA, it would be a
   cinch to convert it to use a PostgreSL instance, just a matter of datasource definition.

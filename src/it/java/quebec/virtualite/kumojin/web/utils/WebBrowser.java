@@ -13,6 +13,7 @@ import java.util.List;
 import static java.time.Duration.ofMillis;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsNot.not;
@@ -107,6 +108,12 @@ public class WebBrowser
     public WebBrowser select(String id, String value)
     {
         Select select = new Select(element(id));
+        if (isEmpty(value))
+        {
+            select.selectByIndex(0);
+            return this;
+        }
+
         List<WebElement> options = select.getOptions();
 
         for (int i = 0; i < options.size(); i++)
