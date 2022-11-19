@@ -35,7 +35,7 @@ public class SampleAppPageObject extends PageObject
         stopWebBrowser();
     }
 
-    public SampleAppPageObject add(EventTableRow event)
+    public void add(EventTableRow event)
     {
         browser
             .set(ID_NAME, event.getName())
@@ -43,17 +43,6 @@ public class SampleAppPageObject extends PageObject
             .select(ID_TIMEZONE, event.getTimezone())
             .set(ID_START, event.getStart())
             .click(ID_ADD_BUTTON);
-        return this;
-    }
-
-    public void addFormIsCleared()
-    {
-        poll(() -> {
-            validateElementAttribute(ID_NAME, "value", "");
-            validateElementAttribute(ID_DESCRIPTION, "value", "");
-            validateElementAttribute(ID_TIMEZONE, "value", "");
-            validateElementAttribute(ID_START, "value", "");
-        });
     }
 
     public SampleAppPageObject isViewing()
@@ -66,6 +55,16 @@ public class SampleAppPageObject extends PageObject
     {
         startWebBrowser();
         browser.go(URL);
+    }
+
+    public void validateAddFormIsCleared()
+    {
+        poll(() -> {
+            validateElementAttribute(ID_NAME, "value", "");
+            validateElementAttribute(ID_DESCRIPTION, "value", "");
+            validateElementAttribute(ID_TIMEZONE, "value", "");
+            validateElementAttribute(ID_START, "value", "");
+        });
     }
 
     public void validateErrorHidden()

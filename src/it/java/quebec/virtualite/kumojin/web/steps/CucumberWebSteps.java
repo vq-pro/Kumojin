@@ -16,15 +16,19 @@ public class CucumberWebSteps
     @When("we add this event:")
     public void weAddEvent(EventTableRow event)
     {
-        sampleAppPageObject
-            .add(event)
-            .addFormIsCleared();
+        sampleAppPageObject.add(event);
     }
 
     @When("we enter the application")
     public void weEnterApp()
     {
         sampleAppPageObject.startApplication();
+    }
+
+    @Then("the add form is cleared")
+    public void addFormIsCleared()
+    {
+        sampleAppPageObject.validateAddFormIsCleared();
     }
 
     @Then("we don't see an error message")

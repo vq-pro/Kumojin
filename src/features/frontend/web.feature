@@ -24,7 +24,8 @@ Feature: Web
     When we add this event:
       | name                  | description            | timezone | start            |
       | Dinner (or something) | Not sure about dinner. | London   | 2022-12-26 14:30 |
-    Then we see this event list:
+    Then the add form is cleared
+    And we see this event list:
       | name                  | description            | start                   |
       | Dinner (or something) | Not sure about dinner. | 2022-12-26 14:30 Z      |
       | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 |
