@@ -34,6 +34,8 @@ Located in .run directory.
   it according to a given format (locale-specific). And there could be a simpler interface to select the date on the add
   form (i.e. a popup calendar). But again, I decided to take a few shortcuts to avoid working on this for too long.
 
+* To save time, I also left out timezone and timestamp validation.
+
 * For persistence, integrated the H2 memory database, also for simplicity. This way, it will run on any local
   configuration, without the need for a more complex Docker container (or the like). Since the app is JPA, it would be a
   cinch to convert it to use a PostgreSL instance, just a matter of datasource definition.

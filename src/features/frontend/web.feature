@@ -4,31 +4,30 @@ Feature: Web
     Given these predefined events:
       | name     | description                | timezone | start            | end              |
       | Wedding  | Wedding in Paris.          | +01:00   | 2022-12-25 12:00 | 2022-12-27 23:00 |
-      | Aventure | Jazz Festival in Montreal. | -05:00   | 2023-06-30 18:00 | 2023-07-07 09:00 |
+      | Festival | Jazz Festival in Montreal. | -05:00   | 2023-06-30 18:00 | 2023-07-07 09:00 |
       | Funeral  | Funeral in Istanbul.       | +03:00   | 2022-12-18 17:00 | 2022-12-18 20:00 |
     When we enter the application
     Then we see this event list:
       | name     | description                | start                   | end                     |
-      | Aventure | Jazz Festival in Montreal. | 2023-06-30 18:00 -05:00 | 2023-07-07 09:00 -05:00 |
+      | Festival | Jazz Festival in Montreal. | 2023-06-30 18:00 -05:00 | 2023-07-07 09:00 -05:00 |
       | Funeral  | Funeral in Istanbul.       | 2022-12-18 17:00 +03:00 | 2022-12-18 20:00 +03:00 |
       | Wedding  | Wedding in Paris.          | 2022-12-25 12:00 +01:00 | 2022-12-27 23:00 +01:00 |
 
-  @Ignore
   Scenario: Add an event
     Given these predefined events:
-      | name    | description          | timezone | start            |
-      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 |
-      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 |
+      | name    | description          | timezone | start            | end              |
+      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 | 2022-12-18 20:00 |
     And we enter the application
     When we add this event:
-      | name                  | description            | timezone | start            |
-      | Dinner (or something) | Not sure about dinner. | London   | 2022-12-26 14:30 |
+      | name                  | description            | timezone | start            | end              |
+      | Dinner (or something) | Not sure about dinner. | London   | 2022-12-26 19:30 | 2022-12-26 22:00 |
     Then the add form is cleared
     And we see this event list:
-      | name                  | description            | start                   |
-      | Dinner (or something) | Not sure about dinner. | 2022-12-26 14:30 Z      |
-      | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 |
-      | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 |
+      | name                  | description            | start                   | end                     |
+      | Dinner (or something) | Not sure about dinner. | 2022-12-26 19:30 +00:00 | 2022-12-26 22:00 +00:00 |
+      | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 | 2022-12-18 20:00 +03:00 |
+      | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 | 2022-12-27 23:00 +01:00 |
 
   @Ignore
   Scenario Outline: Add an event - ERROR - <error message> [name=<name>]

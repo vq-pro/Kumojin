@@ -1,20 +1,19 @@
 Feature: Backend
 
-  @Ignore
   Scenario: Add an event
     Given these predefined events:
-      | name    | description          | timezone | start            |
-      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 |
-      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 |
+      | name    | description          | timezone | start            | end              |
+      | Wedding | Wedding in Paris.    | +01:00   | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 | 2022-12-18 20:00 |
     When we POST this event successfully:
-      | name                  | description            | timezone | start            |
-      | Dinner (or something) | Not sure about dinner. | +00:00   | 2022-12-26 14:30 |
+      | name                  | description            | timezone | start            | end              |
+      | Dinner (or something) | Not sure about dinner. | +00:00   | 2022-12-26 19:30 | 2022-12-26 22:00 |
     When we GET the event list
     Then we receive this:
-      | name                  | description            | start                   |
-      | Dinner (or something) | Not sure about dinner. | 2022-12-26 14:30 +00:00 |
-      | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 |
-      | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 |
+      | name                  | description            | start                   | end                     |
+      | Dinner (or something) | Not sure about dinner. | 2022-12-26 19:30 +00:00 | 2022-12-26 22:00 +00:00 |
+      | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 | 2022-12-18 20:00 +03:00 |
+      | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 | 2022-12-27 23:00 +01:00 |
 
   @Ignore
   Scenario Outline: Add an event - ERROR - [name=<name>]

@@ -36,13 +36,16 @@
     <select id="timezone">
         <option value="">&lt;Please select&gt;</option>
         <option value="+03:00">Istanbul</option>
-        <option value="Z">London</option>
+        <option value="+00:00">London</option>
         <option value="-05:00">Montreal</option>
         <option value="+01:00">Paris</option>
     </select>
     <br>
     <label for="start">Start:</label>
     <input id="start" type="text"/>
+    <br>
+    <label for="end">End:</label>
+    <input id="end" type="text"/>
     <br>
 
     <input id="add" type="button" value="Add" onclick="addEvent()"/>

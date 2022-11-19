@@ -20,4 +20,7 @@ public class AddEventRequest
 
     @NotBlank(message = "Start is mandatory")
     private String start;
+
+    @NotBlank(message = "End is mandatory")
+    private String end;
 }

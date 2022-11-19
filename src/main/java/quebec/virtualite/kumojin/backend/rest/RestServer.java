@@ -43,7 +43,8 @@ public class RestServer
             .setName(request.getName())
             .setDescription(request.getDescription())
             .setTimezone(request.getTimezone())
-            .setEventStart(parseTimestamp(request.getStart(), request.getTimezone())));
+            .setEventStart(parseTimestamp(request.getStart(), request.getTimezone()))
+            .setEventEnd(parseTimestamp(request.getEnd(), request.getTimezone())));
 
         return ResponseEntity.status(CREATED).build();
     }

@@ -42,7 +42,8 @@ public class CucumberBackendSteps
                 .setName(event.getName())
                 .setDescription(event.getDescription())
                 .setTimezone(event.getTimezone())
-                .setStart(event.getStart()));
+                .setStart(event.getStart())
+                .setEnd(event.getEnd()));
     }
 
     /**

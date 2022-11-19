@@ -6,7 +6,8 @@ function addEvent()
         name: getInputField('name'),
         description: getInputField('desc'),
         timezone: getInputField('timezone'),
-        start: getInputField('start')
+        start: getInputField('start'),
+        end: getInputField('end')
     }
 
     let options = {
@@ -55,6 +56,7 @@ function clearNewEvent()
     clearInputField('desc');
     clearInputField('timezone');
     clearInputField('start');
+    clearInputField('end');
 }
 
 function displayEvent(event)

@@ -16,6 +16,7 @@ public class SampleAppPageObject extends PageObject
     private static final String ID_ADD_BUTTON = "add";
     private static final String ID_DESCS = "descs";
     private static final String ID_DESCRIPTION = "desc";
+    private static final String ID_END = "end";
     private static final String ID_ENDS = "ends";
     private static final String ID_ERROR_MESSAGE = "error";
     private static final String ID_NAME = "name";
@@ -43,6 +44,7 @@ public class SampleAppPageObject extends PageObject
             .set(ID_DESCRIPTION, event.getDescription())
             .select(ID_TIMEZONE, event.getTimezone())
             .set(ID_START, event.getStart())
+            .set(ID_END, event.getEnd())
             .click(ID_ADD_BUTTON);
     }
 
@@ -65,6 +67,7 @@ public class SampleAppPageObject extends PageObject
             validateElementAttribute(ID_DESCRIPTION, "value", "");
             validateElementAttribute(ID_TIMEZONE, "value", "");
             validateElementAttribute(ID_START, "value", "");
+            validateElementAttribute(ID_END, "value", "");
         });
     }
 
@@ -74,7 +77,8 @@ public class SampleAppPageObject extends PageObject
             assertThat(browser.elementAttribute(ID_NAME, "value").equals("") &&
                        browser.elementAttribute(ID_DESCRIPTION, "value").equals("") &&
                        browser.elementAttribute(ID_TIMEZONE, "value").equals("") &&
-                       browser.elementAttribute(ID_START, "value").equals(""),
+                       browser.elementAttribute(ID_START, "value").equals("") &&
+                       browser.elementAttribute(ID_END, "value").equals(""),
                 equalTo(false));
         });
     }
