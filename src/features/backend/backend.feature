@@ -15,7 +15,7 @@ Feature: Backend
       | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 |
       | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 |
 
-  Scenario Outline: Add an event - ERROR - <error case>
+  Scenario Outline: Add an event - ERROR - [name=<name>]
     Given these predefined events:
       | name    | description          | timezone | start            |
       | Funeral | Funeral in Istanbul. | +03:00   | 2022-12-18 17:00 |
@@ -24,15 +24,15 @@ Feature: Backend
       | <name> | <description> | <timezone> | <start> |
     Then we receive a <code> error
     Examples:
-      | error case          | name      | description       | timezone | start            | code |
-      | Duplicate name      | Funeral   | Some description. | +01:00   | 2022-12-26 14:30 | 409  |
-      | Empty name          |           | Some description. | +01:00   | 2022-12-26 14:30 | 400  |
-      | Empty description   | Funeral   |                   | +01:00   | 2022-12-26 14:30 | 400  |
-      | Empty timezone      | Funeral   | Some description. |          | 2022-12-26 14:30 | 400  |
-      | Empty start         | Funeral   | Some description. | +01:00   |                  | 400  |
-      | Empty everything    |           |                   |          |                  | 400  |
-      | Error 418 generator | error 418 | -                 | -        | -                | 418  |
-      | Error 500 generator | error 500 | -                 | -        | -                | 500  |
+      | name              | description       | timezone | start            | code |
+      | Funeral           | Duplicate name    | +01:00   | 2022-12-26 14:30 | 409  |
+      |                   | Empty name        | +01:00   | 2022-12-26 14:30 | 400  |
+      | Empty description |                   | +01:00   | 2022-12-26 14:30 | 400  |
+      | Empty timezone    | Some description. |          | 2022-12-26 14:30 | 400  |
+      | Empty start       | Some description. | +01:00   |                  | 400  |
+      |                   |                   |          |                  | 400  |
+      | error 418         | -                 | -        | -                | 418  |
+      | error 500         | -                 | -        | -                | 500  |
 
   Scenario: Get list of events [when not empty]
     Given these predefined events:
