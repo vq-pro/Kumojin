@@ -15,10 +15,13 @@ public class DateTimeUtilsTest
 {
     private static final String DB_A = "2022-12-25 12:00";
     private static final String DB_B = "2022-12-18 09:00";
+    private static final String DB_C = "2022-12-18 12:00";
     private static final String TS_A = "2022-12-25 12:00";
     private static final String TS_B = "2022-12-18 17:00";
+    private static final String TS_C = "2022-12-18 17:00";
     private static final String TZ_A = "-05:00";
     private static final String TZ_B = "+03:00";
+    private static final String TZ_C = "+00:00";
 
     private static final SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
@@ -27,6 +30,7 @@ public class DateTimeUtilsTest
     {
         formatTimestamp(TS_A, TZ_A);
         formatTimestamp(TS_B, TZ_B);
+        formatTimestamp(TS_C, TZ_C);
     }
 
     private void formatTimestamp(String stringTimestamp, String timezone)
@@ -46,6 +50,7 @@ public class DateTimeUtilsTest
     {
         parseTimestamp(TS_A, TZ_A, DB_A);
         parseTimestamp(TS_B, TZ_B, DB_B);
+        parseTimestamp(TS_C, TZ_C, DB_C);
     }
 
     private void parseTimestamp(String timestamp, String timezone, String expectedTimestampDB)

@@ -14,12 +14,23 @@ public class DateTimeUtils
 {
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private static final DateTimeFormatter FMT_TZ = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm XXX");
+    private static final String GREENWICH_PREFIX = "GMT";
+    private static final String GREENWICH_TIMEZONE = "+00:00";
 
     public static String formatTimestamp(Timestamp timestamp, String timezone)
     {
-        return FMT_TZ.format(
-            moveTimestamp(timestamp.toLocalDateTime(),
-                systemDefault(), zone(timezone)));
+        if (GREENWICH_TIMEZONE.equals(timezone))
+        {
+            return FMT.format(
+                moveTimestamp(timestamp.toLocalDateTime(),
+                    systemDefault(), zone(timezone))) + " " + GREENWICH_TIMEZONE;
+        }
+        else
+        {
+            return FMT_TZ.format(
+                moveTimestamp(timestamp.toLocalDateTime(),
+                    systemDefault(), zone(timezone)));
+        }
     }
 
     public static Timestamp parseTimestamp(String stringValue, String timezone)
@@ -34,13 +45,11 @@ public class DateTimeUtils
         LocalDateTime ldt, ZoneId fromZone, ZoneId toZone)
     {
         ZonedDateTime ldtFrom = ldt.atZone(fromZone);
-        ZonedDateTime ldtTo = ldtFrom.withZoneSameInstant(toZone);
-
-        return ldtTo;
+        return ldtFrom.withZoneSameInstant(toZone);
     }
 
     private static ZoneId zone(String timezone)
     {
-        return ZoneId.ofOffset("GMT", ZoneOffset.of(timezone));
+        return ZoneId.ofOffset(GREENWICH_PREFIX, ZoneOffset.of(timezone));
     }
 }

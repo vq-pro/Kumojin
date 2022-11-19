@@ -11,7 +11,7 @@ Feature: Backend
     When we GET the event list
     Then we receive this:
       | name                  | description            | start                   |
-      | Dinner (or something) | Not sure about dinner. | 2022-12-26 14:30 Z      |
+      | Dinner (or something) | Not sure about dinner. | 2022-12-26 14:30 +00:00 |
       | Funeral               | Funeral in Istanbul.   | 2022-12-18 17:00 +03:00 |
       | Wedding               | Wedding in Paris.      | 2022-12-25 12:00 +01:00 |
 
