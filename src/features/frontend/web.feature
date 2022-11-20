@@ -41,15 +41,16 @@ Feature: Web
     Then the add form is not cleared
     And we see this error message: "<error message>"
     Examples:
-      | name           | description          | timezone | start            | end              | error message               |
-      | Funeral        | Funeral in Istanbul. | Istanbul | 2022-12-18 17:00 | 2022-12-18 20:00 | Duplicate event             |
-      |                | No name              | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 | Invalid event               |
-      | No description |                      | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 | Invalid event               |
-      | No timezone    | Funeral in Istanbul. |          | 2022-12-25 12:00 | 2022-12-27 23:00 | Invalid event               |
-      | No start       | Funeral in Istanbul. | Paris    |                  | 2022-12-27 23:00 | Invalid event               |
-      | No end         | Funeral in Istanbul. | Paris    | 2022-12-25 12:00 |                  | Invalid event               |
-      | error 204      | -                    | Paris    | -                | -                | Internal server error (204) |
-      | error 500      | -                    | Paris    | -                | -                | Internal server error (500) |
+      | error message               | name           | description          | timezone | start            | end              |
+      | Duplicate event             | Funeral        | Funeral in Istanbul. | Istanbul | 2022-12-18 17:00 | 2022-12-18 20:00 |
+      | Invalid event               |                | No name              | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Invalid event               | No description |                      | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Invalid event               | No timezone    | -                    |          | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Invalid event               | No start       | -                    | Paris    |                  | 2022-12-27 23:00 |
+      | Invalid event               | No end         | -                    | Paris    | 2022-12-25 12:00 |                  |
+      | Invalid event               | Bad start      | -                    | Paris    | xyz              | 2022-12-27 23:00 |
+      | Internal server error (204) | error 204      | -                    | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 |
+      | Internal server error (500) | error 500      | -                    | Paris    | 2022-12-25 12:00 | 2022-12-27 23:00 |
 
   Scenario: Add an event - ERROR - Error disappears after successful add
     Given we enter the application

@@ -24,16 +24,21 @@ Feature: Backend
       | <name> | <description> | <timezone> | <start> | <end> |
     Then we receive a <code> error
     Examples:
-      | name              | description       | timezone | start            | end              | code |
-      | Funeral           | Duplicate name    | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 | 409  |
-      |                   | Empty name        | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 | 400  |
-      | Empty description |                   | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 | 400  |
-      | Empty timezone    | Some description. |          | 2022-12-26 14:30 | 2022-12-27 09:00 | 400  |
-      | Empty start       | Some description. | +01:00   |                  | 2022-12-27 09:00 | 400  |
-      | Empty end         | Some description. | +01:00   | 2022-12-26 14:30 |                  | 400  |
-      |                   |                   |          |                  |                  | 400  |
-      | error 418         | -                 | -        | -                | -                | 418  |
-      | error 500         | -                 | -        | -                | -                | 500  |
+      | code | name              | description    | timezone | start            | end              |
+      | 400  |                   | Empty name     | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 400  | Empty description |                | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 400  | Empty timezone    | -              |          | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 400  | Empty start       | -              | +01:00   |                  | 2022-12-27 09:00 |
+      | 400  | Empty end         | -              | +01:00   | 2022-12-26 14:30 |                  |
+      | 400  | Bad timezone      | -              | +0x:00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 400  | Bad timezone      | -              | 01:00    | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 400  | Bad timezone      | -              | +01x00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 400  | Bad start         | -              | +01:00   | 2022-12-x6 14:30 | 2022-12-27 09:00 |
+      | 400  | Bad end           | -              | +01:00   | 2022-12-26 14:30 | 2022-12-27 09x00 |
+      | 400  |                   |                |          |                  |                  |
+      | 409  | Funeral           | Duplicate name | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 418  | error 418         | -              | -01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
+      | 500  | error 500         | -              | +01:00   | 2022-12-26 14:30 | 2022-12-27 09:00 |
 
   Scenario: Get list of events [when not empty]
     Given these predefined events:
