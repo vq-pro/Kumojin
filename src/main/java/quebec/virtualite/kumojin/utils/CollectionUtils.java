@@ -14,17 +14,6 @@ public class CollectionUtils
         return new ArrayList<>(List.of(items));
     }
 
-    public static <T> List<T> list(Iterable<T> iterable)
-    {
-        ArrayList<T> results = new ArrayList<>();
-        for (T item : iterable)
-        {
-            results.add(item);
-        }
-
-        return results;
-    }
-
     public static <I, O> List<O> transform(List<I> inputList, Function<I, O> mapperFunction)
     {
         return inputList.stream()
