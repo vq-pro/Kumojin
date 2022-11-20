@@ -2,9 +2,10 @@
 
 ## Main page
 
-Start WebApplication, and then go to http://localhost:8080/index.html
+Start [Application](src/main/java/quebec/virtualite/kumojin/Application.java), and then go
+to http://localhost:8080/index.html.
 
-Here's the [source](src/main/resources/static/index.html).
+Here's the source for [index.html](src/main/resources/static/index.html).
 
 ## Features
 
