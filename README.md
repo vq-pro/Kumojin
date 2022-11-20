@@ -4,6 +4,8 @@
 
 Start WebApplication, and then go to http://localhost:8080/index.html
 
+Here's the [source](src/main/resources/static/index.html).
+
 ## Features
 
 [Web scenarios](src/features/frontend/web.feature)
@@ -25,8 +27,7 @@ Located in .run directory.
   JavaScript was used.
 
 * Keeping things simple on the frontend allowed me to focus on the tests and the backend code. I chose not to implement
-  some
-  cosmetic niceties, like the Add button to disable/enable itself based on form validation (the backend validates
+  some cosmetic niceties, like the Add button to disable/enable itself based on form validation (the backend validates
   instead), or a label that says something like "No events" when the list is empty.
 
 * And also took a few shortcuts with the date display and input. As of now, it's the backend that supplies the date in
@@ -40,5 +41,8 @@ Located in .run directory.
 
 * Start and end event times will be kept in the database as a "TIMESTAMP". The timezone, in format "-05:00" will be
   stored in the DB. When timestamps are received by the backend REST server, it will convert timestamps to the server's
-  local timezone. When the REST server give these back to the frontend (through the GET list method), they will be
+  local timezone for persistence. When the REST server give these back to the frontend (through the GET list method),
+  they will be
   converted back into the actual timezones.
+
+* Easy to add new cities/timezones. They are specified right in the HTML page.
