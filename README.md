@@ -31,19 +31,18 @@ Located in .run directory.
   some cosmetic niceties, like the Add button to disable/enable itself based on form validation (the backend validates
   instead), or a label that says something like "No events" when the list is empty.
 
-* And also took a few shortcuts with the date display and input. As of now, it's the backend that supplies the date in
+* Also took a few shortcuts with the date display and input. As of now, it's the backend that supplies the dates in
   string representation. This is not ideal: normally the frontend would receive it in plain ISO format, and then display
   it according to a given format (locale-specific). And there could be a simpler interface to select the date on the add
   form (i.e. a popup calendar). But again, I decided to take a few shortcuts to avoid working on this for too long.
 
 * For persistence, integrated the H2 memory database, also for simplicity. This way, it will run on any local
   configuration, without the need for a more complex Docker container (or the like). Since the app is JPA, it would be a
-  cinch to convert it to use a PostgreSL instance, just a matter of datasource definition.
+  cinch to convert it to use a PostgreSQL instance, just a matter of the datasource definition.
 
-* Start and end event times will be kept in the database as a "TIMESTAMP". The timezone, in format "-05:00" will be
-  stored in the DB. When timestamps are received by the backend REST server, it will convert timestamps to the server's
-  local timezone for persistence. When the REST server give these back to the frontend (through the GET list method),
-  they will be
-  converted back into the actual timezones.
+* Start and end event times will be kept in the database as a "TIMESTAMP". The timezone, in format "-05:00" will also be
+  stored in the DB. When timestamps are received by the backend REST server, it will convert them to the server's
+  local timezone for persistence. When the REST server gives these back to the frontend (through the GET list method),
+  they will be converted back into the actual timezones.
 
 * Easy to add new cities/timezones. They are specified right in the HTML page.
